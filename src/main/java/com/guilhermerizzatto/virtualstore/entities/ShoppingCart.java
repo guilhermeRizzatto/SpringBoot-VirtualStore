@@ -13,14 +13,20 @@ public class ShoppingCart implements Serializable{
 	private Long id;
 	private BigDecimal shippingPrice;
 	
+	
+	private Address address;
+	private Customer customer;
 	private List<ProductItem> products = new ArrayList<>();
+	private Order order;
 	
 	public ShoppingCart() {
 	}
 
-	public ShoppingCart(Long id) {
+	public ShoppingCart(Long id, Address address, Customer customer) {
 		super();
 		this.id = id;
+		this.address = address;
+		this.customer = customer;
 	}
 
 	public Long getId() {
@@ -41,6 +47,30 @@ public class ShoppingCart implements Serializable{
 	
 	public List<ProductItem> getProducts() {
 		return products;
+	}
+	
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+	
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
 	}
 
 	@Override

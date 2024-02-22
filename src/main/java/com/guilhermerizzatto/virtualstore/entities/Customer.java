@@ -17,6 +17,7 @@ public class Customer implements Serializable{
 	private String password;
 	
 	private List<Address> adresses = new ArrayList<>();
+	private ShoppingCart shoppingCart;
 	
 	public Customer() {
 	}
@@ -83,6 +84,14 @@ public class Customer implements Serializable{
 		return adresses;
 	}
 	
+	public ShoppingCart getShoppingCart() {
+		return shoppingCart;
+	}
+
+	public void setShoppingCart(ShoppingCart shoppingCart) {
+		this.shoppingCart = shoppingCart;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
