@@ -13,12 +13,12 @@ public class ProductItem {
 	public ProductItem() {
 	}
 
-	public ProductItem(ShoppingCart shoppingCart, Product product, Integer quantity, BigDecimal price) {
+	public ProductItem(ShoppingCart shoppingCart, Product product, Integer quantity) {
 		super();
 		this.shoppingCart = shoppingCart;
 		this.product = product;
 		this.quantity = quantity;
-		this.price = price;
+		this.price = subTotal();
 	}
 
 	public ShoppingCart getShoppingCart() {
@@ -49,14 +49,14 @@ public class ProductItem {
 		return price;
 	}
 
-	public void setPrice(BigDecimal price) {
-		this.price = price;
-	}
-
 	@Override
 	public String toString() {
 		return "ProductItem [shoppingCart=" + shoppingCart + ", product=" + product + ", quantity=" + quantity
 				+ ", price=" + price + "]";
+	}
+	
+	public BigDecimal subTotal() {
+		return product.getPrice().multiply(BigDecimal.valueOf(quantity));
 	}
 	
 	
