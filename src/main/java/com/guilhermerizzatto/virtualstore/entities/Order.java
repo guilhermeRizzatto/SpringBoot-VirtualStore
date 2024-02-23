@@ -18,12 +18,12 @@ public class Order implements Serializable{
 	public Order() {
 	}
 	
-	public Order(Long id, BigDecimal total, Instant moment, ShoppingCart shoppingCart) {
+	public Order(Long id, Instant moment, ShoppingCart shoppingCart) {
 		super();
 		this.id = id;
-		this.total = total;
 		this.moment = moment;
 		this.shoppingCart = shoppingCart;
+		this.total = totalPrice();
 	}
 
 	public Long getId() {
@@ -80,6 +80,15 @@ public class Order implements Serializable{
 		return "Order [id=" + id + ", total=" + total + ", moment=" + moment + "]";
 	}
 	
+	public BigDecimal totalPrice() {
+		BigDecimal total = new BigDecimal(0);
+		
+		for(ProductItem p : shoppingCart.getProducts()) {
+			 total = total.add(p.getPrice());
+		}
+		
+		return total = total.add(shoppingCart.getShippingPrice());
+	}
 	
 	
 	
