@@ -8,6 +8,9 @@ public class Stock implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
+	public static final String local = "Rua Antônio Ovídio Rodrigues, 1 - Bomfim, Jundiaí - SP"; //fictional location
+	
+
 	private Map<Product ,Integer> productsWithQuantity = new HashMap<>();
 	
 	public Stock() {
