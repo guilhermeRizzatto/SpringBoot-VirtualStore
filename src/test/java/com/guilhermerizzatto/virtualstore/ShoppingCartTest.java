@@ -1,25 +1,28 @@
 package com.guilhermerizzatto.virtualstore;
 
-import java.io.IOException;
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import com.google.maps.errors.ApiException;
-import com.guilhermerizzatto.virtualstore.APIs.GoogleDirectionsAPI;
 import com.guilhermerizzatto.virtualstore.entities.Address;
+import com.guilhermerizzatto.virtualstore.entities.Customer;
 import com.guilhermerizzatto.virtualstore.entities.Product;
 import com.guilhermerizzatto.virtualstore.entities.ProductItem;
-import com.guilhermerizzatto.virtualstore.entities.ShippingPriceCalculator;
 import com.guilhermerizzatto.virtualstore.entities.ShoppingCart;
 
-class ShippingPriceCalculatorTest {
+class ShoppingCartTest {
 
-	@Test //check if the ShippingPriceCalculator.calc is returning the correct value when the shopping cart have 2 products
-	void checkTheShippingPriceWith2Products() throws ApiException, InterruptedException, IOException {
+	@Test //verify the method shippingPriceCalculator in the class ShoppingCart
+	void verifyShippingPriceCalculator() {
 		DecimalFormat df = new DecimalFormat("#.00");
+		
+		Customer customer = new Customer();
+		customer.setId(Long.valueOf(1));
 		
 		Address customerAddress = new Address(); //Random address, only for the test
 		customerAddress.setId(Long.valueOf(1));
@@ -27,25 +30,24 @@ class ShippingPriceCalculatorTest {
 		customerAddress.setDistrict("Jardim Bonifacio");
 		customerAddress.setCity("São Paulo");
 		customerAddress.setCity("SP");
+		customerAddress.setCustomer(customer);
 		
+		customer.getAdresses().add(customerAddress);
 		
 		Product product = new Product(Long.valueOf(1), "Mousepad", "DESCRIPTION", new BigDecimal(19.99), "IMAGEURL");
 		Product product2 = new Product(Long.valueOf(2), "Keyboard", "DESCRIPTION", new BigDecimal(29.99), "IMAGEURL");
 		
-		ShoppingCart shoppingCart = new ShoppingCart();
-		
-		shoppingCart.setId(Long.valueOf(1));
+		ShoppingCart shoppingCart = new ShoppingCart(Long.valueOf(1), customer.getAdresses().get(0), customer);
 		
 		ProductItem mousepad = new ProductItem(shoppingCart, product, 1);
 		ProductItem keyboard = new ProductItem(shoppingCart, product2, 1);
 		
-		BigDecimal totalPriceOfProductItem = mousepad.getPrice().add(keyboard.getPrice());
-		Integer quantity = mousepad.getQuantity()+keyboard.getQuantity();
+		shoppingCart.getProducts().add(mousepad);
+		shoppingCart.getProducts().add(keyboard);
 		
+		shoppingCart.shippingPriceCalculator();
 		
-		BigDecimal shippingPrice = ShippingPriceCalculator.calc(totalPriceOfProductItem, GoogleDirectionsAPI.getDistance(customerAddress), quantity);
-		
-		Assertions.assertEquals(df.format(new BigDecimal(9.69)), df.format(shippingPrice));
+		Assertions.assertEquals(df.format(new BigDecimal(9.69)), df.format(shoppingCart.getShippingPrice()));		
 	}
 
 }

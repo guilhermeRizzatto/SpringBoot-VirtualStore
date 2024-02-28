@@ -59,6 +59,6 @@ public class ProductItem {
 		return product.getPrice().multiply(BigDecimal.valueOf(quantity));
 	}
 	
-	
 
+	
 }

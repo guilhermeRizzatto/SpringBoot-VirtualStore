@@ -1,10 +1,14 @@
 package com.guilhermerizzatto.virtualstore.entities;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import com.google.maps.errors.ApiException;
+import com.guilhermerizzatto.virtualstore.APIs.GoogleDirectionsAPI;
 
 public class ShoppingCart implements Serializable{
 	
@@ -22,7 +26,7 @@ public class ShoppingCart implements Serializable{
 	public ShoppingCart() {
 	}
 
-	public ShoppingCart(Long id, Address address, Customer customer) {
+	public ShoppingCart(Long id, Address address, Customer customer){
 		super();
 		this.id = id;
 		this.address = address;
@@ -72,7 +76,7 @@ public class ShoppingCart implements Serializable{
 	public void setOrder(Order order) {
 		this.order = order;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -95,7 +99,31 @@ public class ShoppingCart implements Serializable{
 		return "ShoppingCart [id=" + id + ", shippingPrice=" + shippingPrice + "]";
 	}
 	
-	
+	public void shippingPriceCalculator() {
+		BigDecimal priceOfProducts = new BigDecimal(0);
+		int quantity = 0;
+		Long distance = Long.valueOf(0);
+		
+		try {
+			
+		distance = GoogleDirectionsAPI.getDistance(address);
+		
+		}catch (ApiException e) {
+			System.out.println(e.getMessage());
+		}catch (InterruptedException e) {
+			System.out.println(e.getMessage());
+		}catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		for(ProductItem x : products) {
+			quantity++;
+			priceOfProducts = priceOfProducts.add(x.getPrice()); 
+		}
+		
+		shippingPrice = ShippingPriceCalculator.calc(priceOfProducts, distance, quantity);
+		
+	}
 	
 	
 	
