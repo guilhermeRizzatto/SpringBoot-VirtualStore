@@ -17,7 +17,7 @@ import com.guilhermerizzatto.virtualstore.entities.Stock;
 public class GoogleDirectionsAPI {
 	
 	private static GeoApiContext context = new GeoApiContext.Builder()
-		    .apiKey("AIzaSyDR3niIrCbYpug3rMfz9FAX6JdB6nSNcbQ")
+		    .apiKey("YOUR_GOOGLE_API_KEY")
 		    .build();
 	
 	 public static Long getDistance(Address address) throws ApiException, InterruptedException, IOException {
