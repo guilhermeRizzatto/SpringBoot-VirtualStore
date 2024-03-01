@@ -1,43 +1,19 @@
 package com.guilhermerizzatto.virtualstore.DB;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
 
-@Component
 public class DBprops {
-	
-	@Value("${spring.datasource.username}")
-	private String username;
-	
-	@Value("${spring.datasource.password}")
-	private String password;
-	
-	@Value("${spring.datasource.url}")
-	private String url;
-	
-	
-	public String getUsername() {
-		return username;
-	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public static Properties loadProperties() {
+		try (FileInputStream fs = new FileInputStream("URL TO DB.PROPERTIES")) {
+			Properties props = new Properties();
+			props.load(fs);
+			return props;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
 }

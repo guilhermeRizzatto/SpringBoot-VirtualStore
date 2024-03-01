@@ -2,24 +2,52 @@ package com.guilhermerizzatto.virtualstore.DB;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Properties;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-@Component
 public class DBconnection {
 	
 	private static Connection conn = null;
 	
-	@Autowired
-	private DBprops props;
-	
-	public Connection getConnection() throws SQLException {
+
+	public static Connection getConnection(){
 		if(conn == null) {
-			conn = DriverManager.getConnection(props.getUrl(), props.getUsername(), props.getPassword());
+			try {
+			Properties props = DBprops.loadProperties();
+			String url = props.getProperty("dburl");
+			conn = DriverManager.getConnection(url, props);
+			}catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
 		}
 		return conn;
 	}
+	
+	public static void closeStatement(Statement st) {
+		if(st != null) {
+			try {
+				st.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public static void closeResultSet(ResultSet rs) {
+		if(rs != null) {
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
+
 
 }
