@@ -13,6 +13,6 @@ public interface EmployeeDao {
 	public List<Employee> findAll();
 	public Employee insert(Employee obj);
 	public void update(Employee employee);
-	public void detele(Long id);
+	public void delete(Long id);
 	
 }

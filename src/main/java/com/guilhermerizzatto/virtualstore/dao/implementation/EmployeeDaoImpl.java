@@ -29,7 +29,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
-			st = conn.prepareStatement("SELECT * FROM employee " + "WHERE id = ?");
+			st = conn.prepareStatement("SELECT * FROM employee WHERE id = ?");
 
 			st.setLong(1, id);
 
@@ -60,7 +60,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		ResultSet rs = null;
 		List<Employee> list = new ArrayList<Employee>();
 		try {
-			st = conn.prepareStatement("SELECT * FROM employee " + "ORDER BY id");
+			st = conn.prepareStatement("SELECT * FROM employee ORDER BY id ASC");
 
 			rs = st.executeQuery();
 
@@ -87,7 +87,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	public Employee insert(Employee obj) {
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement("INSERT INTO employee " + "(name, email, cpf, phone) " + "VALUES " + "(?,?,?,?)",
+			st = conn.prepareStatement("INSERT INTO employee (name, email, cpf, phone) VALUES (?,?,?,?)",
 					Statement.RETURN_GENERATED_KEYS);
 
 			st.setString(1, obj.getName());
@@ -119,15 +119,42 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	}
 
 	@Override
-	public void update(Employee employee) {
-		// TODO Auto-generated method stub
+	public void update(Employee obj) {
+		
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement("UPDATE employee SET name = ?, email = ?, cpf = ?, phone = ? WHERE id = ?");
 
+			st.setString(1, obj.getName());
+			st.setString(2, obj.getEmail());
+			st.setString(3, obj.getCpf());
+			st.setString(4, obj.getPhone());
+			st.setLong(5,obj.getId());
+
+			st.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBconnection.closeStatement(st);
+		}
 	}
 
 	@Override
-	public void detele(Long id) {
-		// TODO Auto-generated method stub
+	public void delete(Long id) {
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement("DELETE FROM employee WHERE id = ?");
 
+			st.setLong(1, id);
+
+			st.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBconnection.closeStatement(st);
+		}
 	}
 
 }
