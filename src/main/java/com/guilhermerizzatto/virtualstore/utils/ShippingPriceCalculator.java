@@ -3,7 +3,8 @@ package com.guilhermerizzatto.virtualstore.utils;
 import java.math.BigDecimal;
 
 public class ShippingPriceCalculator {
-	
+
+
 	private static final Double pricePerKm = 0.09;
 	private static final Double priceEveryTwoProducts = 0.39;
 

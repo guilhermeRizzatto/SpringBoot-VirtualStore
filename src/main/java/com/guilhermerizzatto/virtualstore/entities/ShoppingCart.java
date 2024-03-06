@@ -9,6 +9,7 @@ import java.util.Objects;
 
 import com.google.maps.errors.ApiException;
 import com.guilhermerizzatto.virtualstore.APIs.GoogleDirectionsAPI;
+import com.guilhermerizzatto.virtualstore.utils.ShippingPriceCalculator;
 
 public class ShoppingCart implements Serializable{
 	

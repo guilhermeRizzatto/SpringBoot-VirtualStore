@@ -12,7 +12,7 @@ import com.guilhermerizzatto.virtualstore.APIs.GoogleDirectionsAPI;
 import com.guilhermerizzatto.virtualstore.entities.Address;
 import com.guilhermerizzatto.virtualstore.entities.Product;
 import com.guilhermerizzatto.virtualstore.entities.ProductItem;
-import com.guilhermerizzatto.virtualstore.entities.ShippingPriceCalculator;
+import com.guilhermerizzatto.virtualstore.utils.ShippingPriceCalculator;
 import com.guilhermerizzatto.virtualstore.entities.ShoppingCart;
 
 class ShippingPriceCalculatorTest {
