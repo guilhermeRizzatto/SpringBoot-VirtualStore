@@ -15,9 +15,7 @@ public class DBconnection {
 	public static Connection getConnection(){
 		if(conn == null) {
 			try {
-			Properties props = DBprops.loadProperties();
-			String url = props.getProperty("dburl");
-			conn = DriverManager.getConnection(url, props);
+			conn = DriverManager.getConnection(DBprops.dburl, DBprops.user, DBprops.password);
 			}catch (SQLException e) {
 				System.out.println(e.getMessage());
 			}
