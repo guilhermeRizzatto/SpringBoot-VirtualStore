@@ -1,5 +1,7 @@
 package com.guilhermerizzatto.virtualstore.entities;
 
+import com.guilhermerizzatto.virtualstore.enums.Role;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -12,6 +14,8 @@ public class Employee implements Serializable{
 	private String email;
 	private String cpf;
 	private String phone;
+
+	private Role role = Role.EMPLOYEE;
 	
 	public Employee() {
 	}
@@ -23,6 +27,14 @@ public class Employee implements Serializable{
 		this.email = email;
 		this.cpf = cpf;
 		this.phone = phone;
+	}
+
+	public Employee(Employee obj) {
+		this.id = obj.getId();
+		this.name = obj.getName();
+		this.email = obj.getEmail();
+		this.cpf = obj.getCpf();
+		this.phone = obj.getPhone();
 	}
 
 	public Long getId() {
@@ -64,7 +76,11 @@ public class Employee implements Serializable{
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	
+
+	public String getRole() {
+		return role.getRole();
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

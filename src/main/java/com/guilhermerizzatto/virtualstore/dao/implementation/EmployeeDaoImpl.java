@@ -85,15 +85,17 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override
 	public Employee insert(Employee obj) {
+		Employee objToSave = new Employee(obj);
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement("INSERT INTO employee (name, email, cpf, phone) VALUES (?,?,?,?)",
+			st = conn.prepareStatement("INSERT INTO employee (name, email, cpf, phone, role) VALUES (?,?,?,?,?::role)",
 					Statement.RETURN_GENERATED_KEYS);
 
-			st.setString(1, obj.getName());
-			st.setString(2, obj.getEmail());
-			st.setString(3, obj.getCpf());
-			st.setString(4, obj.getPhone());
+			st.setString(1, objToSave.getName());
+			st.setString(2, objToSave.getEmail());
+			st.setString(3, objToSave.getCpf());
+			st.setString(4, objToSave.getPhone());
+			st.setString(5, objToSave.getRole());
 
 			int rowsAffected = st.executeUpdate();
 
@@ -101,10 +103,10 @@ public class EmployeeDaoImpl implements EmployeeDao {
 				ResultSet rs = st.getGeneratedKeys();
 				if (rs.next()) {
 					Long id = rs.getLong(1);
-					obj.setId(id);
+					objToSave.setId(id);
 				}
 				DBconnection.closeResultSet(rs);
-				return obj;
+				return objToSave;
 			} else {
 				throw new IOException();
 			}
