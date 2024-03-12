@@ -15,7 +15,7 @@ import com.guilhermerizzatto.virtualstore.DB.DBconnection;
 import com.guilhermerizzatto.virtualstore.dao.EmployeeDao;
 import com.guilhermerizzatto.virtualstore.entities.Employee;
 
-@Service
+
 public class EmployeeDaoImpl implements EmployeeDao {
 
 	private Connection conn;

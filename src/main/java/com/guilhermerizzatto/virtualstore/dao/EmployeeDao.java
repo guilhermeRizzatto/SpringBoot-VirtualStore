@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.guilhermerizzatto.virtualstore.entities.Employee;
 
-@Repository
+
 public interface EmployeeDao {
 	
 	public Employee findById(Long id);
