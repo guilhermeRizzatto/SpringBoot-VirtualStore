@@ -1,5 +1,8 @@
 package com.guilhermerizzatto.virtualstore.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.guilhermerizzatto.virtualstore.enums.Role;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +18,7 @@ public class Customer implements Serializable{
 	private String cpf;
 	private String phone;
 	private String password;
+	private Role role = Role.CUSTOMER;
 	
 	private List<Address> adresses = new ArrayList<>();
 	private ShoppingCart shoppingCart;
@@ -31,6 +35,17 @@ public class Customer implements Serializable{
 		this.phone = phone;
 		this.password = password;
 	}
+
+	public Customer(Customer obj) {
+		super();
+		this.id = obj.getId();
+		this.name = obj.getName();
+		this.email = obj.getEmail();
+		this.cpf = obj.getCpf();
+		this.phone = obj.getPhone();
+		this.password = obj.getPassword();
+	}
+
 
 	public Long getId() {
 		return id;
@@ -79,7 +94,16 @@ public class Customer implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
+	@JsonIgnore
+	public String getRoleString() {
+		return role.getRole();
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
 	public List<Address> getAdresses() {
 		return adresses;
 	}
@@ -111,13 +135,14 @@ public class Customer implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Customer [id=" + id + ", name=" + name + ", email=" + email + ", cpf=" + cpf + ", phone=" + phone
-				+ ", password=" + password + "]";
+		return "Customer{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", email='" + email + '\'' +
+				", cpf='" + cpf + '\'' +
+				", phone='" + phone + '\'' +
+				", password='" + password + '\'' +
+				", role=" + role +
+				'}';
 	}
-	
-	
-	
-	
-	
-
 }
