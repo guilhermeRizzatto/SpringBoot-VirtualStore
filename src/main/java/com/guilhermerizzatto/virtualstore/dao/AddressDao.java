@@ -10,5 +10,8 @@ public interface AddressDao {
 
     public Address insert(Address obj);
 
+    public void update(Address obj);
+    public void delete(Long id);
+
     public List<Address> findByCustomerId(Long customerId);
 }

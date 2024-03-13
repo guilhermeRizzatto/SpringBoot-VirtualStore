@@ -93,6 +93,44 @@ public class AddressDaoImpl implements AddressDao {
         return null;
     }
 
+    @Override
+    public void update(Address obj) {
+        PreparedStatement st = null;
+        try {
+            st = conn.prepareStatement("UPDATE address SET street = ?, district = ?, city = ?, state = ? WHERE id = ?");
+
+            st.setString(1, obj.getStreet());
+            st.setString(2, obj.getDistrict());
+            st.setString(3, obj.getCity());
+            st.setString(4, obj.getState());
+            st.setLong(5,obj.getId());
+
+            st.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBconnection.closeStatement(st);
+        }
+    }
+
+    @Override
+    public void delete(Long id) {
+        PreparedStatement st = null;
+        try {
+            st = conn.prepareStatement("DELETE FROM address WHERE id = ?");
+
+            st.setLong(1, id);
+
+            st.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBconnection.closeStatement(st);
+        }
+    }
+
     @Override //to use in Customer only
     public List<Address> findByCustomerId(Long customerId) {
         PreparedStatement st = null;
