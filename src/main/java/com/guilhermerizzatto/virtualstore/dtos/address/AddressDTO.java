@@ -2,7 +2,6 @@ package com.guilhermerizzatto.virtualstore.dtos.address;
 
 import com.guilhermerizzatto.virtualstore.dtos.customer.CustomerDTOforAddress;
 import com.guilhermerizzatto.virtualstore.entities.Address;
-import com.guilhermerizzatto.virtualstore.entities.Customer;
 
 import java.io.Serializable;
 

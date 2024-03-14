@@ -1,10 +1,8 @@
 package com.guilhermerizzatto.virtualstore.dao;
 
-import java.util.List;
-
-import org.springframework.stereotype.Repository;
-
 import com.guilhermerizzatto.virtualstore.entities.Employee;
+
+import java.util.List;
 
 
 public interface EmployeeDao {

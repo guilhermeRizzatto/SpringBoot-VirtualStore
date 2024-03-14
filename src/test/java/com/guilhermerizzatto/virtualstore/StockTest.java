@@ -1,12 +1,11 @@
 package com.guilhermerizzatto.virtualstore;
 
-import java.math.BigDecimal;
-
+import com.guilhermerizzatto.virtualstore.entities.Product;
+import com.guilhermerizzatto.virtualstore.entities.Stock;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import com.guilhermerizzatto.virtualstore.entities.Product;
-import com.guilhermerizzatto.virtualstore.entities.Stock;
+import java.math.BigDecimal;
 
 class StockTest {
 

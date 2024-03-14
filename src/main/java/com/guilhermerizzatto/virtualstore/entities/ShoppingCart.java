@@ -1,15 +1,15 @@
 package com.guilhermerizzatto.virtualstore.entities;
 
+import com.google.maps.errors.ApiException;
+import com.guilhermerizzatto.virtualstore.APIs.GoogleDirectionsAPI;
+import com.guilhermerizzatto.virtualstore.utils.ShippingPriceCalculator;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import com.google.maps.errors.ApiException;
-import com.guilhermerizzatto.virtualstore.APIs.GoogleDirectionsAPI;
-import com.guilhermerizzatto.virtualstore.utils.ShippingPriceCalculator;
 
 public class ShoppingCart implements Serializable{
 	

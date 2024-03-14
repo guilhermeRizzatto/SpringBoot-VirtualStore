@@ -1,19 +1,18 @@
 package com.guilhermerizzatto.virtualstore;
 
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 import com.google.maps.errors.ApiException;
 import com.guilhermerizzatto.virtualstore.APIs.GoogleDirectionsAPI;
 import com.guilhermerizzatto.virtualstore.entities.Address;
 import com.guilhermerizzatto.virtualstore.entities.Product;
 import com.guilhermerizzatto.virtualstore.entities.ProductItem;
-import com.guilhermerizzatto.virtualstore.utils.ShippingPriceCalculator;
 import com.guilhermerizzatto.virtualstore.entities.ShoppingCart;
+import com.guilhermerizzatto.virtualstore.utils.ShippingPriceCalculator;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 class ShippingPriceCalculatorTest {
 

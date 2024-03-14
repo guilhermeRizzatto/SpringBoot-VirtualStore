@@ -1,10 +1,8 @@
 package com.guilhermerizzatto.virtualstore.controllers;
 
 import com.guilhermerizzatto.virtualstore.dao.implementation.CustomerDaoImpl;
-import com.guilhermerizzatto.virtualstore.dao.implementation.EmployeeDaoImpl;
 import com.guilhermerizzatto.virtualstore.dtos.customer.CustomerDTO;
 import com.guilhermerizzatto.virtualstore.entities.Customer;
-import com.guilhermerizzatto.virtualstore.entities.Employee;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

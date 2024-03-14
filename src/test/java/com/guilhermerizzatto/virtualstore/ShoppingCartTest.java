@@ -1,19 +1,11 @@
 package com.guilhermerizzatto.virtualstore;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.util.List;
-
+import com.guilhermerizzatto.virtualstore.entities.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import com.guilhermerizzatto.virtualstore.entities.Address;
-import com.guilhermerizzatto.virtualstore.entities.Customer;
-import com.guilhermerizzatto.virtualstore.entities.Product;
-import com.guilhermerizzatto.virtualstore.entities.ProductItem;
-import com.guilhermerizzatto.virtualstore.entities.ShoppingCart;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 class ShoppingCartTest {
 

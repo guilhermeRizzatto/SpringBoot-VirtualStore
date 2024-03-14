@@ -1,13 +1,12 @@
 package com.guilhermerizzatto.virtualstore;
 
-import java.io.IOException;
-
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 import com.google.maps.errors.ApiException;
 import com.guilhermerizzatto.virtualstore.APIs.GoogleDirectionsAPI;
 import com.guilhermerizzatto.virtualstore.entities.Address;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
 
 class GoogleDirectionsTest {
 

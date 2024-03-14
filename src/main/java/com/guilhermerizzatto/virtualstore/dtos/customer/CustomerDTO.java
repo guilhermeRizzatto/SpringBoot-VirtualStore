@@ -5,7 +5,6 @@ import com.guilhermerizzatto.virtualstore.entities.Customer;
 import com.guilhermerizzatto.virtualstore.enums.Role;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDTO implements Serializable {
