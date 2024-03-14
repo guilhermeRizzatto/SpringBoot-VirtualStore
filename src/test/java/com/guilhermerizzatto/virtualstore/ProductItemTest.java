@@ -15,7 +15,7 @@ class ProductItemTest {
 	@Test
 	//verify if the subTotal method is correctly implemented
 	void subTotal() {
-		//Uses decimalFormat because when it returning this subTotal in response, it has to be returned with two numbers after decimal point
+		//Uses decimalFormat because when it's returning this subTotal in response, it has to be returned with two numbers after decimal point
 		DecimalFormat df = new DecimalFormat("#.00");
 		
 		Product product = new Product(Long.valueOf(1), "Iphone 15", "Iphone 15, 128gb 5G", new BigDecimal(7900.99), "IMAGEURL");
