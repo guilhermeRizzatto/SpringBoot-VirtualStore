@@ -7,7 +7,7 @@ A Spring Boot API program for a Virtual Store, Consuming Google Directions API a
 <br>
 
 **DB Model:** 
-![Modelagem Banco de Dados Virtual Store - Atualizado](https://github.com/guilhermeRizzatto/SpringBoot-VirtualStore/assets/126302322/ab0605e6-2bd0-40aa-aa87-29c9876661a3)
+![Untitled](https://github.com/guilhermeRizzatto/SpringBoot-VirtualStore/assets/126302322/3b8c59cb-fda1-4e9e-ac43-f44f73c86f18)
 <br>
 
 **Tools which I want to use:**<br>
