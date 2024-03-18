@@ -13,12 +13,12 @@ import com.guilhermerizzatto.virtualstore.entities.Employee;
 @RequestMapping(value = "/employee")
 public class EmployeeController {
 	
-	EmployeeDaoImpl jdbcImpl = new EmployeeDaoImpl();
+	EmployeeDaoImpl employeeImpl = new EmployeeDaoImpl();
 	
 	
 	@GetMapping(value = "/findByID/{id}")
 	public ResponseEntity<Employee> findByID(@PathVariable Long id)  {
-		Employee result = jdbcImpl.findById(id);
+		Employee result = employeeImpl.findById(id);
 		if(result == null) {		
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
@@ -27,7 +27,7 @@ public class EmployeeController {
 	
 	@GetMapping(value = "/findAll")
 	public ResponseEntity<List<Employee>> findAll()  {
-		List<Employee> list= jdbcImpl.findAll();
+		List<Employee> list= employeeImpl.findAll();
 		if(list.isEmpty()) {		
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
@@ -37,7 +37,7 @@ public class EmployeeController {
 	
 	@PostMapping
 	public ResponseEntity<Employee> post(@RequestBody Employee obj)  {
-		Employee result = jdbcImpl.insert(obj);
+		Employee result = employeeImpl.insert(obj);
 		if(result == null) {		
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
 		}
@@ -46,13 +46,13 @@ public class EmployeeController {
 
 	@PutMapping(value = "/put")
 	public ResponseEntity<String> update(@RequestBody Employee obj){
-		jdbcImpl.update(obj);
+		employeeImpl.update(obj);
 		return ResponseEntity.status(HttpStatus.OK).body("Updated successfully");
 	}
 
 	@DeleteMapping(value = "/delete/{id}")
 	public ResponseEntity<String> delete(@PathVariable Long id){
-		jdbcImpl.delete(id);
+		employeeImpl.delete(id);
 		return ResponseEntity.status(HttpStatus.OK).body("Deleted successfully");
 	}
 

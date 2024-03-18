@@ -3,7 +3,6 @@ package com.guilhermerizzatto.virtualstore.controllers;
 import com.guilhermerizzatto.virtualstore.dao.implementation.AddressDaoImpl;
 import com.guilhermerizzatto.virtualstore.dtos.address.AddressDTO;
 import com.guilhermerizzatto.virtualstore.entities.Address;
-import com.guilhermerizzatto.virtualstore.entities.Customer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,11 +12,11 @@ import org.springframework.web.bind.annotation.*;
 public class AddressController {
 
 
-    AddressDaoImpl jdbcImpl = new AddressDaoImpl();
+    AddressDaoImpl addressImpl = new AddressDaoImpl();
 
     @GetMapping(value = "/findByID/{id}")
     public ResponseEntity<AddressDTO> findByID(@PathVariable Long id)  {
-        AddressDTO result = new AddressDTO(jdbcImpl.findById(id));
+        AddressDTO result = new AddressDTO(addressImpl.findById(id));
         if(result == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
@@ -26,7 +25,7 @@ public class AddressController {
 
     @PostMapping
     public ResponseEntity<AddressDTO> post(@RequestBody Address obj)  {
-        AddressDTO result = new AddressDTO(jdbcImpl.insert(obj));
+        AddressDTO result = new AddressDTO(addressImpl.insert(obj));
         if(result == null) {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
         }
@@ -35,13 +34,13 @@ public class AddressController {
 
     @PutMapping(value = "/put")
     public ResponseEntity<String> update(@RequestBody Address obj){
-        jdbcImpl.update(obj);
+        addressImpl.update(obj);
         return ResponseEntity.status(HttpStatus.OK).body("Updated successfully");
     }
 
     @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id){
-        jdbcImpl.delete(id);
+        addressImpl.delete(id);
         return ResponseEntity.status(HttpStatus.OK).body("Deleted successfully");
     }
 }

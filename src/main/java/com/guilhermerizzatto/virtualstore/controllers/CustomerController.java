@@ -13,11 +13,11 @@ import java.util.List;
 @RequestMapping(value = "/customer")
 public class CustomerController {
 
-    CustomerDaoImpl jdbcImpl = new CustomerDaoImpl();
+    CustomerDaoImpl customerImpl = new CustomerDaoImpl();
 
     @GetMapping(value = "/findByID/{id}")
     public ResponseEntity<CustomerDTO> findByID(@PathVariable Long id)  {
-        CustomerDTO result = new CustomerDTO(jdbcImpl.findById(id));
+        CustomerDTO result = new CustomerDTO(customerImpl.findById(id));
         if(result == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
@@ -26,7 +26,7 @@ public class CustomerController {
 
     @GetMapping(value = "/findAll")
     public ResponseEntity<List<Customer>> findAll()  {
-        List<Customer> list= jdbcImpl.findAll();
+        List<Customer> list= customerImpl.findAll();
         if(list.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
@@ -36,7 +36,7 @@ public class CustomerController {
 
     @PostMapping
     public ResponseEntity<Customer> post(@RequestBody Customer obj)  {
-        Customer result = jdbcImpl.insert(obj);
+        Customer result = customerImpl.insert(obj);
         if(result == null) {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
         }
@@ -45,13 +45,13 @@ public class CustomerController {
 
     @PutMapping(value = "/put")
     public ResponseEntity<String> update(@RequestBody Customer obj){
-        jdbcImpl.update(obj);
+        customerImpl.update(obj);
         return ResponseEntity.status(HttpStatus.OK).body("Updated successfully");
     }
 
     @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id){
-        jdbcImpl.delete(id);
+        customerImpl.delete(id);
         return ResponseEntity.status(HttpStatus.OK).body("Deleted successfully");
     }
 }

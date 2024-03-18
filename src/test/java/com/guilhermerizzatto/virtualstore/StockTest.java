@@ -19,7 +19,7 @@ class StockTest {
 		
 		stock.addProductAndQuantity(product, 5);
 		
-		Assertions.assertTrue(stock.getMap().containsKey(product));
+		Assertions.assertTrue(stock.get().containsKey(product));
 	}
 	
 	@Test //check if have 2 products with the same ID, the map will store only 1 product
@@ -36,7 +36,7 @@ class StockTest {
 		
 		int keys = 0;
 		
-		for(Product key : stock.getMap().keySet()) {
+		for(Product key : stock.get().keySet()) {
 			keys++;
 		}
 		
