@@ -85,4 +85,23 @@ public class StockDaoImpl implements StockDao {
             DBconnection.closeStatement(st);
         }
     }
+
+
+	@Override
+	public void updateQuantity(Long id, Integer quantity) {
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement("UPDATE stock SET quantity = ? WHERE product_id = ?");
+
+			st.setInt(1, quantity);
+			st.setLong(2, id);
+
+			st.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBconnection.closeStatement(st);
+		}
+	}
 }
