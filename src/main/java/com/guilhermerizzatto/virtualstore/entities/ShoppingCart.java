@@ -27,11 +27,20 @@ public class ShoppingCart implements Serializable{
 	public ShoppingCart() {
 	}
 
-	public ShoppingCart(Long id, Address address, Customer customer){
+	public ShoppingCart(Long id, Address address, Customer customer, Order order){
 		super();
 		this.id = id;
 		this.address = address;
 		this.customer = customer;
+		this.order = order;
+	}
+	
+	public ShoppingCart(ShoppingCart obj){
+		super();
+		this.id = obj.getId();
+		this.address = obj.getAddress();
+		this.customer = obj.getCustomer();
+		this.order = obj.getOrder();
 	}
 
 	public Long getId() {
@@ -118,7 +127,7 @@ public class ShoppingCart implements Serializable{
 		}
 		
 		for(ProductItem x : products) {
-			quantity++;
+			quantity += x.getQuantity();
 			priceOfProducts = priceOfProducts.add(x.getPrice()); 
 		}
 		
