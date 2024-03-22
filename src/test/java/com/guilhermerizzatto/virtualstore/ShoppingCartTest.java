@@ -29,17 +29,20 @@ class ShoppingCartTest {
 		Product product = new Product(Long.valueOf(1), "Mousepad", "DESCRIPTION", new BigDecimal(19.99), "IMAGEURL");
 		Product product2 = new Product(Long.valueOf(2), "Keyboard", "DESCRIPTION", new BigDecimal(29.99), "IMAGEURL");
 		
-		ShoppingCart shoppingCart = new ShoppingCart(Long.valueOf(1), customer.getAdresses().get(0), customer);
+		ShoppingCart shoppingCart = new ShoppingCart();
+		shoppingCart.setId(Long.valueOf(1));
+		shoppingCart.setCustomer(customer);
+		shoppingCart.setAddress(customer.getAdresses().get(0));
 		
-		ProductItem mousepad = new ProductItem(shoppingCart, product, 1);
-		ProductItem keyboard = new ProductItem(shoppingCart, product2, 1);
+		ProductItem mousepad = new ProductItem(shoppingCart, product, 4);
+		ProductItem keyboard = new ProductItem(shoppingCart, product2, 9);
 		
 		shoppingCart.getProducts().add(mousepad);
 		shoppingCart.getProducts().add(keyboard);
 		
 		shoppingCart.shippingPriceCalculator();
 		
-		Assertions.assertEquals(df.format(new BigDecimal(9.69)), df.format(shoppingCart.getShippingPrice()));		
+		Assertions.assertEquals(df.format(new BigDecimal(13.59)), df.format(shoppingCart.getShippingPrice()));		
 	}
 
 }
