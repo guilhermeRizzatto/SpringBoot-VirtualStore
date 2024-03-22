@@ -50,13 +50,12 @@ public class StockDaoImpl implements StockDao {
 
     @Override
     public void insertProductAndQuantity(Product obj, Integer quantity) {
-        Product objToSave = new Product(obj);
         PreparedStatement st = null;
         try {
             st = conn.prepareStatement("INSERT INTO stock (product_id, quantity) VALUES (?,?)",
                     Statement.RETURN_GENERATED_KEYS);
 
-            st.setLong(1, objToSave.getId());
+            st.setLong(1, obj.getId());
             st.setInt(2, quantity);
 
             st.executeUpdate();
@@ -73,7 +72,6 @@ public class StockDaoImpl implements StockDao {
         PreparedStatement st = null;
         try {
             st = conn.prepareStatement("DELETE FROM stock WHERE product_id = ?");
-
 
             st.setLong(1, id);
 

@@ -78,16 +78,15 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public Product insert(Product obj) {
-        Product objToSave = new Product(obj);
         PreparedStatement st = null;
         try {
             st = conn.prepareStatement("INSERT INTO product (name, description, price, imageurl) VALUES (?,?,?,?)",
                     Statement.RETURN_GENERATED_KEYS);
 
-            st.setString(1, objToSave.getName());
-            st.setString(2, objToSave.getDescription());
-            st.setBigDecimal(3, objToSave.getPrice());
-            st.setString(4, objToSave.getImageURL());
+            st.setString(1, obj.getName());
+            st.setString(2, obj.getDescription());
+            st.setBigDecimal(3, obj.getPrice());
+            st.setString(4, obj.getImageURL());
 
             int rowsAffected = st.executeUpdate();
 
@@ -95,10 +94,10 @@ public class ProductDaoImpl implements ProductDao {
                 ResultSet rs = st.getGeneratedKeys();
                 if (rs.next()) {
                     Long id = rs.getLong(1);
-                    objToSave.setId(id);
+                    obj.setId(id);
                 }
                 DBconnection.closeResultSet(rs);
-                return objToSave;
+                return obj;
             } else {
                 throw new IOException();
             }
