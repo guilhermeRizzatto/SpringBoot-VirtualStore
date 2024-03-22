@@ -8,11 +8,12 @@ public class ShippingPriceCalculator {
 	private static final Double priceEveryTwoProducts = 0.39;
 
 	public static BigDecimal calc(BigDecimal priceOfProducts, Long distance, Integer quantityOfProducts) {
-		BigDecimal priceForFreeShippingPrice = new BigDecimal(249.99);
+		
+		BigDecimal priceForFreeShippingPrice = new BigDecimal(1299.99);
 		if(priceOfProducts.compareTo(priceForFreeShippingPrice) > 0) {
 			return new BigDecimal(0);
 		}
-		//every 2 products in shoppingCart price increase 1.39
+		//every 2 products in shoppingCart price increase 0.39
 		if((quantityOfProducts % 2) != 0) {
 			quantityOfProducts -= 1; //to avoid number with decimal point
 		}
