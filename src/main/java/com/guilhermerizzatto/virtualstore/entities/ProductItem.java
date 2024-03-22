@@ -2,6 +2,8 @@ package com.guilhermerizzatto.virtualstore.entities;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class ProductItem {
 	
 	private ShoppingCart shoppingCart;
@@ -20,7 +22,16 @@ public class ProductItem {
 		this.quantity = quantity;
 		this.price = subTotal();
 	}
-
+	
+	public ProductItem(ProductItem obj) {
+		super();
+		this.shoppingCart = obj.getShoppingCart();
+		this.product = obj.getProduct();
+		this.quantity = obj.getQuantity();
+		this.price = subTotal();
+	}
+		
+	@JsonIgnore
 	public ShoppingCart getShoppingCart() {
 		return shoppingCart;
 	}
@@ -47,6 +58,10 @@ public class ProductItem {
 
 	public BigDecimal getPrice() {
 		return price;
+	}
+	
+	public void setPrice(BigDecimal price) {
+		this.price = price;
 	}
 
 	@Override
