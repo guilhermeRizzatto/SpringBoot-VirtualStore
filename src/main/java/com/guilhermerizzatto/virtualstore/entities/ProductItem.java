@@ -1,10 +1,11 @@
 package com.guilhermerizzatto.virtualstore.entities;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-public class ProductItem {
+public class ProductItem implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private ShoppingCart shoppingCart;
 	private Product product;
@@ -31,7 +32,6 @@ public class ProductItem {
 		this.price = subTotal();
 	}
 		
-	@JsonIgnore
 	public ShoppingCart getShoppingCart() {
 		return shoppingCart;
 	}

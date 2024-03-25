@@ -108,7 +108,6 @@ public class Customer implements Serializable{
 		return adresses;
 	}
 	
-	@JsonIgnore
 	public ShoppingCart getShoppingCart() {
 		return shoppingCart;
 	}
