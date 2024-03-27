@@ -14,13 +14,13 @@ public class ProductItemDTOforShoppingCart implements Serializable{
 	
 	private Product product;
 	private Integer quantity;
-	private BigDecimal price;
+	private BigDecimal totalPrice;
 	
 	public ProductItemDTOforShoppingCart(ProductItem obj) {
 		super();
 		this.product = obj.getProduct();
 		this.quantity = obj.getQuantity();
-		this.price = obj.getPrice();
+		this.totalPrice = obj.getPrice();
 	}
 
 	public Product getProduct() {
@@ -39,17 +39,17 @@ public class ProductItemDTOforShoppingCart implements Serializable{
 		this.quantity = quantity;
 	}
 
-	public BigDecimal getPrice() {
-		return price;
+	public BigDecimal getTotalPrice() {
+		return totalPrice;
 	}
 
-	public void setPrice(BigDecimal price) {
-		this.price = price;
+	public void setTotalPrice(BigDecimal totalPrice) {
+		this.totalPrice = totalPrice;
 	}
 
 	@Override
 	public String toString() {
-		return "ProductItemDTOforShoppingCart [product=" + product + ", quantity=" + quantity + ", price=" + price
+		return "ProductItemDTOforShoppingCart [product=" + product + ", quantity=" + quantity + ", price=" + totalPrice
 				+ "]";
 	}
 	
