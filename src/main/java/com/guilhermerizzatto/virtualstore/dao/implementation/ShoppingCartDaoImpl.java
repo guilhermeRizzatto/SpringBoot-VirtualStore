@@ -43,11 +43,12 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 
 			rs = st.executeQuery();
 
+			Address address = new Address();
+			Customer customer = new Customer();
 			
 			while (rs.next()) {
 				cart.setId(rs.getLong(1));
 				
-				Address address = new Address();
 				address.setId(rs.getLong(4));
 				address.setStreet(rs.getString(5));
 				address.setDistrict(rs.getString(6));
@@ -56,7 +57,6 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 				
 				cart.setAddress(address);
 							
-				Customer customer = new Customer();
 				customer.setId(rs.getLong(3));
 				customer.setName(rs.getString(9));
 				customer.setEmail(rs.getString(10));

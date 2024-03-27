@@ -2,6 +2,7 @@ package com.guilhermerizzatto.virtualstore.dtos.shoppingCart;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,8 +42,9 @@ private static final long serialVersionUID = 1L;
 		this.id = id;
 	}
 
-	public BigDecimal getShippingPrice() {
-		return shippingPrice;
+	public String getShippingPrice() {
+		DecimalFormat df = new DecimalFormat("#.00");
+		return df.format(shippingPrice);
 	}
 
 	public void setShippingPrice(BigDecimal shippingPrice) {

@@ -6,24 +6,24 @@ import com.guilhermerizzatto.virtualstore.entities.Customer;
 import com.guilhermerizzatto.virtualstore.enums.Role;
 
 public class CustomerDTOforShoppingCart implements Serializable {
-    private static final long serialVersionUID = 1L;
-	
-	private Long id;
-    private String name;
-    private String email;
-    private String cpf;
-    private String phone;
+	private static final long serialVersionUID = 1L;
 
-    private Role role;
-    
-    public CustomerDTOforShoppingCart(Customer obj) {
-        this.id = obj.getId();
-        this.name = obj.getName();
-        this.email = obj.getEmail();
-        this.cpf = obj.getCpf();
-        this.phone = obj.getPhone();
-        this.role = obj.getRole();
-    }
+	private Long id;
+	private String name;
+	private String email;
+	private String cpf;
+	private String phone;
+
+	private Role role;
+
+	public CustomerDTOforShoppingCart(Customer obj) {
+		this.id = obj.getId();
+		this.name = obj.getName();
+		this.email = obj.getEmail();
+		this.cpf = obj.getCpf();
+		this.phone = obj.getPhone();
+		this.role = obj.getRole();
+	}
 
 	public Long getId() {
 		return id;
@@ -78,7 +78,5 @@ public class CustomerDTOforShoppingCart implements Serializable {
 		return "CustomerDTOforShoppingCart [id=" + id + ", name=" + name + ", email=" + email + ", cpf=" + cpf
 				+ ", phone=" + phone + ", role=" + role + "]";
 	}
-    
-    
 
 }
