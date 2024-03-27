@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.guilhermerizzatto.virtualstore.dao.implementation.ShoppingCartDaoImpl;
+import com.guilhermerizzatto.virtualstore.dtos.shoppingCart.ShoppingCartDTO;
 import com.guilhermerizzatto.virtualstore.entities.ShoppingCart;
 
 @RestController
@@ -28,8 +29,8 @@ public class ShoppingCartController {
 	}
 	
 	@GetMapping(value = "/findByCustomerId/{id}")
-    public ResponseEntity<ShoppingCart> findByCustomerId(@PathVariable Long id)  {
-		ShoppingCart result = shoppingCartImpl.findByCustomerId(id);
+    public ResponseEntity<ShoppingCartDTO> findByCustomerId(@PathVariable Long id)  {
+		ShoppingCartDTO result = new ShoppingCartDTO(shoppingCartImpl.findByCustomerId(id));
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
