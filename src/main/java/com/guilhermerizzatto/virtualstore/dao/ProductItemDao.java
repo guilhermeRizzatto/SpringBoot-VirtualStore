@@ -6,8 +6,7 @@ import com.guilhermerizzatto.virtualstore.entities.ProductItem;
 
 public interface ProductItemDao {
 	
-	public ProductItem findByProduct(Long id);
-    public List<ProductItem> findAll();
+	public List<ProductItem> findByShoppingCart(Long id);
     public ProductItem insert(ProductItem obj);
     public void update(ProductItem productItem);
     public void delete(Long id);
