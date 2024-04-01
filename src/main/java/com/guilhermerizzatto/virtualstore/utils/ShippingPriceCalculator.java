@@ -7,9 +7,13 @@ public class ShippingPriceCalculator {
 	private static final Double pricePerKm = 0.09;
 	private static final Double priceEveryTwoProducts = 0.39;
 
-	public static BigDecimal calc(BigDecimal priceOfProducts, Long distance, Integer quantityOfProducts) {
+	public static BigDecimal calcForShoppingCart(Long distance) {
+		return new BigDecimal((distance/1000) * pricePerKm);
+	}
+	
+	public static BigDecimal calcForOrder(BigDecimal priceOfProducts, Integer quantityOfProducts) {
 		
-		BigDecimal priceForFreeShippingPrice = new BigDecimal(1299.99);
+		BigDecimal priceForFreeShippingPrice = new BigDecimal(1999.99);//1299.00
 		if(priceOfProducts.compareTo(priceForFreeShippingPrice) > 0) {
 			return new BigDecimal(0);
 		}
@@ -17,9 +21,8 @@ public class ShippingPriceCalculator {
 		if((quantityOfProducts % 2) != 0) {
 			quantityOfProducts -= 1; //to avoid number with decimal point
 		}
-		BigDecimal priceByProductQuantity = new BigDecimal(quantityOfProducts * priceEveryTwoProducts);
-		BigDecimal shippingPrice = new BigDecimal((distance/1000) * pricePerKm);
-		return shippingPrice.add(priceByProductQuantity);
+		
+		return new BigDecimal(quantityOfProducts * priceEveryTwoProducts);
 	}
 	
 	

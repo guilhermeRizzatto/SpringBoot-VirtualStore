@@ -110,8 +110,6 @@ public class ShoppingCart implements Serializable{
 	}
 	
 	public void shippingPriceCalculator() {
-		BigDecimal priceOfProducts = new BigDecimal(0);
-		int quantity = 0;
 		Long distance = Long.valueOf(0);
 		
 		try {
@@ -126,12 +124,8 @@ public class ShoppingCart implements Serializable{
 			System.out.println(e.getMessage());
 		}
 		
-		for(ProductItem x : products) {
-			quantity += x.getQuantity();
-			priceOfProducts = priceOfProducts.add(x.getPrice()); 
-		}
 		
-		shippingPrice = ShippingPriceCalculator.calc(priceOfProducts, distance, quantity);
+		shippingPrice = ShippingPriceCalculator.calcForShoppingCart(distance);
 		
 	}
 	
