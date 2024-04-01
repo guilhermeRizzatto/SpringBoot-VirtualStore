@@ -88,7 +88,7 @@ public class ProductItemDaoImpl implements ProductItemDao{
 		ProductItem objToSave = new ProductItem(productItem);
 		 PreparedStatement st = null;
 	        try {
-	            st = conn.prepareStatement("UPDATE productItem SET quantity = ?, price = ? WHERE product_id = ? AND shoppingcart_id = ?");
+	            st = conn.prepareStatement("UPDATE productitem SET quantity = ?, price = ? WHERE product_id = ? AND shoppingcart_id = ?");
 
 	            st.setInt(1, objToSave.getQuantity());
 	            st.setBigDecimal(2, objToSave.getPrice());
@@ -106,9 +106,21 @@ public class ProductItemDaoImpl implements ProductItemDao{
 	}
 
 	@Override
-	public void delete(Long id) {
-		// TODO Auto-generated method stub
-		
+	public void delete(ProductItem productItem) {
+		PreparedStatement st = null;
+        try {
+            st = conn.prepareStatement("DELETE FROM productitem WHERE product_id = ? AND shoppingcart_id = ?");
+
+            st.setLong(1, productItem.getProduct().getId());
+            st.setLong(2, productItem.getShoppingCart().getId());
+            
+            st.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBconnection.closeStatement(st);
+        }
 	}
 	
 }

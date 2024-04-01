@@ -9,6 +9,6 @@ public interface ProductItemDao {
 	public List<ProductItem> findByShoppingCart(Long id);
     public ProductItem insert(ProductItem obj);
     public void update(ProductItem productItem);
-    public void delete(Long id);
+    public void delete(ProductItem productItem);
 
 }
