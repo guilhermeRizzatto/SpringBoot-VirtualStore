@@ -21,7 +21,7 @@ class GoogleDirectionsTest {
 		customerAddress.setCity("SP");
 		
 		//Always check the distance in google maps to be sure
-		Assertions.assertEquals(Long.valueOf(99017), GoogleDirectionsAPI.getDistance(customerAddress)); //The number returned can be changed depending on situations like transit and others
+		Assertions.assertEquals(Long.valueOf(99020), GoogleDirectionsAPI.getDistance(customerAddress)); //The number returned can be changed depending on situations like transit and others
 		
 	}
 
