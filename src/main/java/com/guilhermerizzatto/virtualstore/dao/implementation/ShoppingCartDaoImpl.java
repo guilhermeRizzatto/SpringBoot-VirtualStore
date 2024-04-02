@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.google.maps.errors.ApiException;
+import com.guilhermerizzatto.virtualstore.APIs.GoogleDirectionsAPI;
 import com.guilhermerizzatto.virtualstore.DB.DBconnection;
 import com.guilhermerizzatto.virtualstore.dao.ShoppingCartDao;
 import com.guilhermerizzatto.virtualstore.entities.Address;
@@ -14,6 +16,7 @@ import com.guilhermerizzatto.virtualstore.entities.Customer;
 import com.guilhermerizzatto.virtualstore.entities.Product;
 import com.guilhermerizzatto.virtualstore.entities.ProductItem;
 import com.guilhermerizzatto.virtualstore.entities.ShoppingCart;
+import com.guilhermerizzatto.virtualstore.utils.ShippingPriceCalculator;
 
 public class ShoppingCartDaoImpl implements ShoppingCartDao {
 
@@ -131,9 +134,28 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	}
 
 	@Override
-	public void update(ShoppingCart shoppingCart) {
-		// TODO Auto-generated method stub
+	public void updateShippingPriceWithCep(Long id,String cep) {
+			
+		PreparedStatement st = null;
+	        try {
+	            st = conn.prepareStatement("UPDATE shoppingcart SET shippingprice = ? WHERE id = ?");
 
+	            st.setBigDecimal(1, ShippingPriceCalculator.calcForShoppingCart(GoogleDirectionsAPI.getDistanceWithCep(cep)));
+	            st.setLong(2, id);	          
+	            
+	            st.executeUpdate();
+
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        } catch (ApiException e) {
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+	            DBconnection.closeStatement(st);
+	        }
 	}
 
 	@Override

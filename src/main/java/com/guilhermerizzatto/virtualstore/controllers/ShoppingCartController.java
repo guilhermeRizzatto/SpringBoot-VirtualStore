@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,6 +33,12 @@ public class ShoppingCartController {
     public ResponseEntity<ShoppingCartDTO> findByCustomerId(@PathVariable Long id)  {
 		ShoppingCartDTO result = new ShoppingCartDTO(shoppingCartImpl.findByCustomerId(id));
         return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+	
+	@PutMapping(value = "/put/shoppingCartId/{shoppingCartId}/cep/{cep}")
+    public ResponseEntity<String> updateShippingPriceWithCep(@PathVariable Long shoppingCartId,@PathVariable String cep){
+		shoppingCartImpl.updateShippingPriceWithCep(shoppingCartId, cep);
+        return ResponseEntity.status(HttpStatus.OK).body("Updated successfully");
     }
 
 }
