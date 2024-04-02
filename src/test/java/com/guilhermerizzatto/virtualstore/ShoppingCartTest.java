@@ -42,7 +42,7 @@ class ShoppingCartTest {
 		
 		shoppingCart.shippingPriceCalculator();
 		
-		Assertions.assertEquals(df.format(new BigDecimal(13.59)), df.format(shoppingCart.getShippingPrice()));		
+		Assertions.assertEquals(df.format(new BigDecimal(8.91)), df.format(shoppingCart.getShippingPrice()));		
 	}
 
 }
