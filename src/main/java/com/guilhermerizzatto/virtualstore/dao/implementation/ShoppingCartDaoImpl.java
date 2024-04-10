@@ -1,22 +1,14 @@
 package com.guilhermerizzatto.virtualstore.dao.implementation;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-import com.google.maps.errors.ApiException;
 import com.guilhermerizzatto.virtualstore.APIs.GoogleDirectionsAPI;
 import com.guilhermerizzatto.virtualstore.DB.DBconnection;
 import com.guilhermerizzatto.virtualstore.dao.ShoppingCartDao;
-import com.guilhermerizzatto.virtualstore.entities.Address;
-import com.guilhermerizzatto.virtualstore.entities.Customer;
-import com.guilhermerizzatto.virtualstore.entities.Product;
-import com.guilhermerizzatto.virtualstore.entities.ProductItem;
-import com.guilhermerizzatto.virtualstore.entities.ShoppingCart;
+import com.guilhermerizzatto.virtualstore.entities.*;
 import com.guilhermerizzatto.virtualstore.utils.ShippingPriceCalculator;
+
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.sql.*;
 
 public class ShoppingCartDaoImpl implements ShoppingCartDao {
 
@@ -134,34 +126,49 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	}
 
 	@Override
-	public void updateShippingPriceWithCep(Long id,String cep) {
-			
+	public BigDecimal showShippingPriceWithCep(Long id, String cep) {
+		return ShoppingCart.getTheShippingPriceWithCEP(cep);
+	}
+
+	@Override
+	public void updateAddressInShoppingCart(Long id, Address address) {
+		ShoppingCart obj = new ShoppingCart();
+		obj.setAddress(address);
+		obj.shippingPriceCalculator();
+
 		PreparedStatement st = null;
-	        try {
-	            st = conn.prepareStatement("UPDATE shoppingcart SET shippingprice = ? WHERE id = ?");
+		try {
+			st = conn.prepareStatement("UPDATE shoppingcart SET shippingPrice = ?, address_id = ? WHERE id = ?");
 
-	            st.setBigDecimal(1, ShippingPriceCalculator.calcForShoppingCart(GoogleDirectionsAPI.getDistanceWithCep(cep)));
-	            st.setLong(2, id);	          
-	            
-	            st.executeUpdate();
+			st.setBigDecimal(1, obj.getShippingPrice());
+			st.setLong(2, address.getId());
 
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        } catch (ApiException e) {
-				e.printStackTrace();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} finally {
-	            DBconnection.closeStatement(st);
-	        }
+			st.setLong(3,id);
+
+			st.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBconnection.closeStatement(st);
+		}
 	}
 
 	@Override
 	public void delete(Long id) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement("DELETE FROM shoppingcart WHERE id = ?");
 
+			st.setLong(1, id);
+
+			st.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBconnection.closeStatement(st);
+		}
 	}
 
 }
