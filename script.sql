@@ -52,7 +52,8 @@ CREATE TABLE customerOrder(
 	id BIGSERIAL PRIMARY KEY,
 	total DECIMAL,
 	moment TIMESTAMPTZ,
-	shoppingCart_ID BIGINT REFERENCES shoppingCart(id)
+	shoppingCart_ID BIGINT REFERENCES shoppingCart(id),
+	customer_ID BIGINT REFERENCES customer(id)
 );
 
 CREATE TABLE productItem(
