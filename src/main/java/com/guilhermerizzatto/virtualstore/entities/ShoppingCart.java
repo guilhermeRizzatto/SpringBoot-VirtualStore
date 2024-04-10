@@ -2,6 +2,7 @@ package com.guilhermerizzatto.virtualstore.entities;
 
 import com.google.maps.errors.ApiException;
 import com.guilhermerizzatto.virtualstore.APIs.GoogleDirectionsAPI;
+import com.guilhermerizzatto.virtualstore.utils.GetDistanceAPI;
 import com.guilhermerizzatto.virtualstore.utils.ShippingPriceCalculator;
 
 import java.io.IOException;
@@ -110,24 +111,15 @@ public class ShoppingCart implements Serializable{
 	}
 	
 	public void shippingPriceCalculator() {
-		Long distance = Long.valueOf(0);
-		
-		try {
-			
-		distance = GoogleDirectionsAPI.getDistance(address);
-		
-		}catch (ApiException e) {
-			System.out.println(e.getMessage());
-		}catch (InterruptedException e) {
-			System.out.println(e.getMessage());
-		}catch (IOException e) {
-			System.out.println(e.getMessage());
-		}
-		
-		
+		Long distance = GetDistanceAPI.getDistanceWithAddress(address);
 		shippingPrice = ShippingPriceCalculator.calcForShoppingCart(distance);
-		
 	}
+
+	public static BigDecimal getTheShippingPriceWithCEP(String cep){
+		Long distance = GetDistanceAPI.getDistanceWithCEP(cep);
+		return ShippingPriceCalculator.calcForShoppingCart(distance);
+	}
+
 	
 	
 	
