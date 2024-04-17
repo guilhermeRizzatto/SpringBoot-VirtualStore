@@ -19,13 +19,13 @@ public class GoogleDirectionsAPI {
 	private static GeoApiContext context = new GeoApiContext.Builder()
 		    .apiKey("YOUR_GOOGLE_API_KEY")
 		    .build();
-	
+
 	 public static Long getDistance(Address address) throws ApiException, InterruptedException, IOException {
 		 Distance distance = null;
 		 DirectionsResult result = DirectionsApi.newRequest(context)
 				 .mode(TravelMode.DRIVING)
 				 .origin(Stock.local)
-				 .destination(address.getStreet() + "," + address.getState())
+				 .destination(address.getStreet() + "," + address.getDistrict() + "," + address.getCity() + "," + address.getState())
 				 .units(Unit.METRIC)
 				 .await();
 		 DirectionsRoute[] matrixRoute = result.routes;
@@ -37,5 +37,23 @@ public class GoogleDirectionsAPI {
 		}
 		return distance.inMeters;
 	 }
+
+	public static Long getDistanceWithCep(String cep) throws ApiException, InterruptedException, IOException {
+		Distance distance = null;
+		DirectionsResult result = DirectionsApi.newRequest(context)
+				.mode(TravelMode.DRIVING)
+				.origin(Stock.local)
+				.destination(cep)
+				.units(Unit.METRIC)
+				.await();
+		DirectionsRoute[] matrixRoute = result.routes;
+		for (DirectionsRoute directionsRoute : matrixRoute) {
+			DirectionsLeg[] matrixLeg = directionsRoute.legs;
+			for (DirectionsLeg legs : matrixLeg) {
+				distance = legs.distance;
+			}
+		}
+		return distance.inMeters;
+	}
 
 }
