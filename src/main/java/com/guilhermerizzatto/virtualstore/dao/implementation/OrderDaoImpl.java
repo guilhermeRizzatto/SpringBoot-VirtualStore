@@ -1,13 +1,23 @@
 package com.guilhermerizzatto.virtualstore.dao.implementation;
 
-import com.guilhermerizzatto.virtualstore.DB.DBconnection;
-import com.guilhermerizzatto.virtualstore.dao.OrderDao;
-import com.guilhermerizzatto.virtualstore.entities.*;
-
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.Instant;
+
+import com.guilhermerizzatto.virtualstore.DB.DBconnection;
+import com.guilhermerizzatto.virtualstore.dao.OrderDao;
+import com.guilhermerizzatto.virtualstore.entities.Address;
+import com.guilhermerizzatto.virtualstore.entities.Customer;
+import com.guilhermerizzatto.virtualstore.entities.Order;
+import com.guilhermerizzatto.virtualstore.entities.Product;
+import com.guilhermerizzatto.virtualstore.entities.ProductItem;
+import com.guilhermerizzatto.virtualstore.entities.ShoppingCart;
 
 public class OrderDaoImpl implements OrderDao {
 
@@ -49,7 +59,7 @@ public class OrderDaoImpl implements OrderDao {
 
                 order.setId(rs.getLong(6));
                 order.setTotal(rs.getBigDecimal(7));
-                //order.setMoment(rs.getTimestamp(8).toInstant());
+                order.setMoment(rs.getTimestamp(8).toInstant());
 
                 cart.setId(rs.getLong(9));
                 cart.setShippingPrice(rs.getBigDecimal(10));
@@ -97,16 +107,46 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public Order insert(Order obj) {
+        obj.totalPrice();
+        PreparedStatement st = null;
+        try {
+            st = conn.prepareStatement("INSERT INTO customerorder (total, moment, shoppingcart_id) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
+
+            st.setBigDecimal(1, obj.getTotal());
+            st.setTimestamp(2, Timestamp.from(Instant.now()));
+            st.setLong(3, obj.getShoppingCart().getId());
+
+            int rowsAffected = st.executeUpdate();
+
+            if (rowsAffected > 0) {
+                ResultSet rs = st.getGeneratedKeys();
+                if (rs.next()) {
+                    Long id = rs.getLong(1);
+                    obj.setId(id);
+                }
+                DBconnection.closeResultSet(rs);
+                return obj;
+            } else {
+                throw new IOException();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            DBconnection.closeStatement(st);
+        }
         return null;
-    }
-
-    @Override
-    public void update(Order order) {
-
     }
 
     @Override
     public void delete(Long id) {
 
     }
+
+	@Override
+	public BigDecimal getTotalPrice(ShoppingCart obj) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
