@@ -37,11 +37,11 @@ public class OrderDaoImpl implements OrderDao {
                     ",cOrder.total,cOrder.moment,cart.id AS cart_id,cart.shippingprice,address.id as address_id,address.street,address.district " +
                     ",address.city,address.state,product.id AS product_id,product.name,product.description,product.price,product.imageurl " +
                     ",item.quantity,item.price AS subtotal FROM customer customer " +
-                    "INNER JOIN customerorder cOrder ON cOrder.id = customer.id " +
+                    "INNER JOIN customerorder cOrder ON cOrder.customer_id = customer.id " +
                     "INNER JOIN shoppingcart cart ON cart.id = cOrder.shoppingcart_id " +
                     "INNER JOIN address ON cart.address_id = address.id " +
                     "INNER JOIN productitem item ON item.shoppingcart_id = cart.id " +
-                    "INNER JOIN product ON item.product_id = product.id WHERE customer.id = ?");
+                    "INNER JOIN product ON item.product_id = product.id WHERE cOrder.customer_id = ?");
 
             st.setLong(1, id);
 
@@ -93,9 +93,7 @@ public class OrderDaoImpl implements OrderDao {
                 cart.getProducts().add(item);
 
             }
-
-            order.setTotal(order.totalPrice());
-
+     
             DBconnection.closeResultSet(rs);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -107,14 +105,14 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public Order insert(Order obj) {
-        obj.totalPrice();
         PreparedStatement st = null;
         try {
-            st = conn.prepareStatement("INSERT INTO customerorder (total, moment, shoppingcart_id) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            st = conn.prepareStatement("INSERT INTO customerorder (total, moment, shoppingcart_id, customer_id) VALUES (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 
             st.setBigDecimal(1, obj.getTotal());
             st.setTimestamp(2, Timestamp.from(Instant.now()));
             st.setLong(3, obj.getShoppingCart().getId());
+            st.setLong(4, obj.getShoppingCart().getCustomer().getId());
 
             int rowsAffected = st.executeUpdate();
 
