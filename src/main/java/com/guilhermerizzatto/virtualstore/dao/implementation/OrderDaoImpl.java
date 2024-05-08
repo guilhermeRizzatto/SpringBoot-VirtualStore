@@ -144,7 +144,9 @@ public class OrderDaoImpl implements OrderDao {
 
 	@Override
 	public BigDecimal getTotalPrice(ShoppingCart obj) {
-		// TODO Auto-generated method stub
-		return null;
+		Order order = new Order();
+		order.setShoppingCart(obj);
+		
+		return order.totalPrice();
 	}
 }
