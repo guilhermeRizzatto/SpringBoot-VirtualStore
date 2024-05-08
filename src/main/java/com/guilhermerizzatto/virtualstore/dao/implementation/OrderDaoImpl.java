@@ -109,8 +109,10 @@ public class OrderDaoImpl implements OrderDao {
         try {
             st = conn.prepareStatement("INSERT INTO customerorder (total, moment, shoppingcart_id, customer_id) VALUES (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 
+            obj.setMoment(Instant.now());
+            
             st.setBigDecimal(1, obj.getTotal());
-            st.setTimestamp(2, Timestamp.from(Instant.now()));
+            st.setTimestamp(2, Timestamp.from(obj.getMoment()));
             st.setLong(3, obj.getShoppingCart().getId());
             st.setLong(4, obj.getShoppingCart().getCustomer().getId());
 
@@ -139,7 +141,19 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public void delete(Long id) {
+    	PreparedStatement st = null;
+        try {
+            st = conn.prepareStatement("DELETE FROM customerorder WHERE id = ?");
 
+            st.setLong(1,id);
+            
+            st.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBconnection.closeStatement(st);
+        }
     }
 
 	@Override
