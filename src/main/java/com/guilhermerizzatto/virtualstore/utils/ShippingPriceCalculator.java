@@ -22,7 +22,7 @@ public class ShippingPriceCalculator {
 			quantityOfProducts -= 1; //to avoid number with decimal point
 		}
 		
-		return new BigDecimal(quantityOfProducts * priceEveryTwoProducts);
+		return new BigDecimal((quantityOfProducts / 2) * priceEveryTwoProducts);
 	}
 	
 	
