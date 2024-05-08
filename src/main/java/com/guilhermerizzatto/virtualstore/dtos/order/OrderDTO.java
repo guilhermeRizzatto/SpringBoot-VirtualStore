@@ -1,25 +1,27 @@
 package com.guilhermerizzatto.virtualstore.dtos.order;
 
-import com.guilhermerizzatto.virtualstore.dtos.shoppingCart.ShoppingCartDTOforOrder;
-import com.guilhermerizzatto.virtualstore.entities.Order;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
+import com.guilhermerizzatto.virtualstore.dtos.shoppingCart.ShoppingCartDTOforOrder;
+import com.guilhermerizzatto.virtualstore.entities.Order;
 
 public class OrderDTO implements Serializable {
-
-    private Long id;
+    private static final long serialVersionUID = 1L;
+    
+	private Long id;
     private BigDecimal total;
-    private Instant moment;
+    private ZonedDateTime moment;
 
     private ShoppingCartDTOforOrder shoppingCart;
 
     public OrderDTO(Order obj){
         this.id = obj.getId();
         this.total = obj.getTotal();
-        this.moment = obj.getMoment();
+        this.moment = obj.getMoment().atZone(ZoneId.of("America/Sao_Paulo"));
         this.shoppingCart = new ShoppingCartDTOforOrder(obj.getShoppingCart());
     }
 
@@ -40,11 +42,11 @@ public class OrderDTO implements Serializable {
         this.total = total;
     }
 
-    public Instant getMoment() {
+    public ZonedDateTime getMoment() {
         return moment;
     }
 
-    public void setMoment(Instant moment) {
+    public void setMoment(ZonedDateTime moment) {
         this.moment = moment;
     }
 
