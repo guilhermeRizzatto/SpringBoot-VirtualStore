@@ -1,5 +1,7 @@
 package com.guilhermerizzatto.virtualstore.entities;
 
+import com.guilhermerizzatto.virtualstore.utils.ShippingPriceCalculator;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -21,7 +23,7 @@ public class Order implements Serializable{
 	public Order(Long id, Instant moment, ShoppingCart shoppingCart) {
 		super();
 		this.id = id;
-		this.moment = moment;
+		this.moment = Instant.now();
 		this.shoppingCart = shoppingCart;
 		this.total = totalPrice();
 	}
@@ -82,12 +84,15 @@ public class Order implements Serializable{
 	
 	public BigDecimal totalPrice() {
 		BigDecimal total = new BigDecimal(0);
+		int productQuantity = 0;
 		
 		for(ProductItem p : shoppingCart.getProducts()) {
 			 total = total.add(p.getPrice());
+			 productQuantity += p.getQuantity();
 		}
-		
-		return total = total.add(shoppingCart.getShippingPrice());
+
+		total = total.add(ShippingPriceCalculator.calcForOrder(total, productQuantity));
+		return total.add(shoppingCart.getShippingPrice());
 	}
 	
 	

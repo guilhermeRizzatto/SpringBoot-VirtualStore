@@ -1,5 +1,11 @@
 package com.guilhermerizzatto.virtualstore.entities;
 
+import com.google.maps.errors.ApiException;
+import com.guilhermerizzatto.virtualstore.APIs.GoogleDirectionsAPI;
+import com.guilhermerizzatto.virtualstore.utils.GetDistanceAPI;
+import com.guilhermerizzatto.virtualstore.utils.ShippingPriceCalculator;
+
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -22,11 +28,20 @@ public class ShoppingCart implements Serializable{
 	public ShoppingCart() {
 	}
 
-	public ShoppingCart(Long id, Address address, Customer customer) {
+	public ShoppingCart(Long id, Address address, Customer customer, Order order){
 		super();
 		this.id = id;
 		this.address = address;
 		this.customer = customer;
+		this.order = order;
+	}
+	
+	public ShoppingCart(ShoppingCart obj){
+		super();
+		this.id = obj.getId();
+		this.address = obj.getAddress();
+		this.customer = obj.getCustomer();
+		this.order = obj.getOrder();
 	}
 
 	public Long getId() {
@@ -72,7 +87,7 @@ public class ShoppingCart implements Serializable{
 	public void setOrder(Order order) {
 		this.order = order;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -94,6 +109,17 @@ public class ShoppingCart implements Serializable{
 	public String toString() {
 		return "ShoppingCart [id=" + id + ", shippingPrice=" + shippingPrice + "]";
 	}
+	
+	public void shippingPriceCalculator() {
+		Long distance = GetDistanceAPI.getDistanceWithAddress(address);
+		shippingPrice = ShippingPriceCalculator.calcForShoppingCart(distance);
+	}
+
+	public static BigDecimal getTheShippingPriceWithCEP(String cep){
+		Long distance = GetDistanceAPI.getDistanceWithCEP(cep);
+		return ShippingPriceCalculator.calcForShoppingCart(distance);
+	}
+
 	
 	
 	

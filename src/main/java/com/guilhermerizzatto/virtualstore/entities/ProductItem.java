@@ -1,8 +1,11 @@
 package com.guilhermerizzatto.virtualstore.entities;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class ProductItem {
+public class ProductItem implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private ShoppingCart shoppingCart;
 	private Product product;
@@ -20,7 +23,15 @@ public class ProductItem {
 		this.quantity = quantity;
 		this.price = subTotal();
 	}
-
+	
+	public ProductItem(ProductItem obj) {
+		super();
+		this.shoppingCart = obj.getShoppingCart();
+		this.product = obj.getProduct();
+		this.quantity = obj.getQuantity();
+		this.price = subTotal();
+	}
+		
 	public ShoppingCart getShoppingCart() {
 		return shoppingCart;
 	}
@@ -48,6 +59,10 @@ public class ProductItem {
 	public BigDecimal getPrice() {
 		return price;
 	}
+	
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
 
 	@Override
 	public String toString() {
@@ -59,6 +74,6 @@ public class ProductItem {
 		return product.getPrice().multiply(BigDecimal.valueOf(quantity));
 	}
 	
-	
 
+	
 }

@@ -1,16 +1,15 @@
 package com.guilhermerizzatto.virtualstore;
 
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.time.Instant;
-
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 import com.guilhermerizzatto.virtualstore.entities.Order;
 import com.guilhermerizzatto.virtualstore.entities.Product;
 import com.guilhermerizzatto.virtualstore.entities.ProductItem;
 import com.guilhermerizzatto.virtualstore.entities.ShoppingCart;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.time.Instant;
 
 class OrderTest {
 

@@ -32,7 +32,7 @@ CREATE TABLE product (
 	id BIGSERIAL PRIMARY KEY,
 	name VARCHAR(100),
 	description TEXT,
-	price DECIMAL(8,2),
+	price DECIMAL,
 	imageURL TEXT
 );
 
@@ -43,23 +43,24 @@ CREATE TABLE stock (
 
 CREATE TABLE shoppingCart (
 	id BIGSERIAL PRIMARY KEY,
-	shippingPrice DECIMAL(8,2),
+	shippingPrice DECIMAL,
 	customer_id BIGINT REFERENCES customer(id),
 	address_id BIGINT REFERENCES address(id)
 );
 
 CREATE TABLE customerOrder(
 	id BIGSERIAL PRIMARY KEY,
-	total DECIMAL(8,2),
+	total DECIMAL,
 	moment TIMESTAMPTZ,
-	shoppingCart_ID BIGINT REFERENCES shoppingCart(id)
+	shoppingCart_ID BIGINT REFERENCES shoppingCart(id),
+	customer_ID BIGINT REFERENCES customer(id)
 );
 
 CREATE TABLE productItem(
 	shoppingCart_ID BIGINT REFERENCES shoppingCart(id),
 	product_ID BIGINT REFERENCES product(id),
 	quantity INTEGER,
-	price DECIMAL(8,2)
+	price DECIMAL
 );
 
 

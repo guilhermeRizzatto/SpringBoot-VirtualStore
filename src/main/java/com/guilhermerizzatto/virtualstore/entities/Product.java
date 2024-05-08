@@ -26,6 +26,15 @@ public class Product implements Serializable{
 		this.imageURL = imageURL;
 	}
 
+	public Product(Product obj) {
+		super();
+		this.id = obj.getId();
+		this.name = obj.getName();
+		this.description = obj.getDescription();
+		this.price = obj.getPrice();
+		this.imageURL = obj.getImageURL();
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -85,8 +94,8 @@ public class Product implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price
-				+ ", imageURL=" + imageURL + "]";
+		return "id=" + id + ", name=" + name + ", description=" + description + ", price=" + price
+				+ ", imageURL=" + imageURL;
 	}
 	
 	
