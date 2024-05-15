@@ -30,7 +30,7 @@ public class StockController {
         return ResponseEntity.status(HttpStatus.OK).body(stockImpl.showProductsAndQuantity());
     }
 
-    @PostMapping(value = "/post/{quantity}")
+    @PostMapping(value = "/post/quantity={quantity}")
     public ResponseEntity<Product> post(@RequestBody Product obj, @PathVariable Integer quantity)  {
         Product result = productImpl.insert(obj);
         stockImpl.insertProductAndQuantity(result, quantity);
@@ -40,13 +40,13 @@ public class StockController {
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
     
-    @PutMapping(value = "/put/id={productId}/quantity={quantity}")
+    @PutMapping(value = "/put/ID={productID}/quantity={quantity}")
     public ResponseEntity<String> update(@PathVariable Long productId, @PathVariable Integer quantity){
     	stockImpl.updateQuantity(productId,quantity);
         return ResponseEntity.status(HttpStatus.OK).body("Updated successfully");
     }
 
-    @DeleteMapping(value = "/delete/{id}")
+    @DeleteMapping(value = "/delete/ID={id}")
     public ResponseEntity<String> delete(@PathVariable Long id){
         stockImpl.deleteProductAndQuantity(id);
         productImpl.delete(id);

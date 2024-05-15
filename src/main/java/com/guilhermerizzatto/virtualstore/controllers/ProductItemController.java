@@ -23,7 +23,7 @@ public class ProductItemController {
 	
 	ProductItemDaoImpl productItemImpl = new ProductItemDaoImpl();
 	
-	@PostMapping
+	@PostMapping(value = "/post")
 	public ResponseEntity<ProductItem> post(@RequestBody ProductItem obj)  {
 		ProductItem result = productItemImpl.insert(obj);
 		if(result == null) {		
@@ -32,7 +32,7 @@ public class ProductItemController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(result);
 	}
 	
-	@GetMapping(value = "/findByShoppingCart/{id}")
+	@GetMapping(value = "/findByShoppingCart/ID={id}")
     public ResponseEntity<List<ProductItemDTO>> findAll(@PathVariable Long id)  {
         List<ProductItemDTO> list= ProductItemDTO.createListDTO(productItemImpl.findByShoppingCart(id));
         return ResponseEntity.status(HttpStatus.OK).body(list);

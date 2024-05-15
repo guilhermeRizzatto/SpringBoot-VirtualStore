@@ -17,7 +17,7 @@ public class ProductController {
     StockDaoImpl stockImpl = new StockDaoImpl();
 
 
-    @GetMapping(value = "/findByID/{id}")
+    @GetMapping(value = "/findByID/ID={id}")
     public ResponseEntity<Product> findByID(@PathVariable Long id)  {
         Product result = productImpl.findById(id);
         if(result == null) {

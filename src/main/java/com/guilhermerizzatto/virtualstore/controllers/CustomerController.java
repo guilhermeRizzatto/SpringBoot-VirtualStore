@@ -15,7 +15,7 @@ public class CustomerController {
 
     CustomerDaoImpl customerImpl = new CustomerDaoImpl();
 
-    @GetMapping(value = "/findByID/{id}")
+    @GetMapping(value = "/findByID/ID={id}")
     public ResponseEntity<CustomerDTO> findByID(@PathVariable Long id)  {
         CustomerDTO result = new CustomerDTO(customerImpl.findById(id));
         if(result == null) {
@@ -34,7 +34,7 @@ public class CustomerController {
     }
 
 
-    @PostMapping
+    @PostMapping(value = "/post")
     public ResponseEntity<Customer> post(@RequestBody Customer obj)  {
         Customer result = customerImpl.insert(obj);
         if(result == null) {
@@ -49,7 +49,7 @@ public class CustomerController {
         return ResponseEntity.status(HttpStatus.OK).body("Updated successfully");
     }
 
-    @DeleteMapping(value = "/delete/{id}")
+    @DeleteMapping(value = "/delete/ID={id}")
     public ResponseEntity<String> delete(@PathVariable Long id){
         customerImpl.delete(id);
         return ResponseEntity.status(HttpStatus.OK).body("Deleted successfully");

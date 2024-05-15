@@ -24,13 +24,13 @@ public class OrderController {
 
     OrderDaoImpl orderImpl = new OrderDaoImpl();
 
-    @GetMapping(value = "/findByCustomerID/{id}")
+    @GetMapping(value = "/findByCustomerID/ID={id}")
     public ResponseEntity<OrderDTO> findByCustomerID(@PathVariable Long id)  {
         OrderDTO result = new OrderDTO(orderImpl.findByCustomerID(id));
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
-    @PostMapping
+    @PostMapping(value = "/post")
     public ResponseEntity<OrderDTO> post(@RequestBody Order obj)  {
         OrderDTO result = new OrderDTO(orderImpl.insert(obj));
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
@@ -41,7 +41,7 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.OK).body(orderImpl.getTotalPrice(obj));
     }
     
-    @DeleteMapping(value = "/delete/{id}")
+    @DeleteMapping(value = "/delete/ID={id}")
 	public ResponseEntity<String> delete(@PathVariable Long id){
     	orderImpl.delete(id);
 		return ResponseEntity.status(HttpStatus.OK).body("Deleted successfully");

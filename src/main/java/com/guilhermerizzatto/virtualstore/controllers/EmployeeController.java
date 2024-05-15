@@ -16,7 +16,7 @@ public class EmployeeController {
 	EmployeeDaoImpl employeeImpl = new EmployeeDaoImpl();
 
 	
-	@GetMapping(value = "/findByID/{id}")
+	@GetMapping(value = "/findByID/ID={id}")
 	public ResponseEntity<Employee> findByID(@PathVariable Long id)  {
 		Employee result = employeeImpl.findById(id);
 		if(result == null) {		
@@ -35,7 +35,7 @@ public class EmployeeController {
 	}
 	
 	
-	@PostMapping
+	@PostMapping(value = "/post")
 	public ResponseEntity<Employee> post(@RequestBody Employee obj)  {
 		Employee result = employeeImpl.insert(obj);
 		if(result == null) {		
@@ -50,7 +50,7 @@ public class EmployeeController {
 		return ResponseEntity.status(HttpStatus.OK).body("Updated successfully");
 	}
 
-	@DeleteMapping(value = "/delete/{id}")
+	@DeleteMapping(value = "/delete/ID={id}")
 	public ResponseEntity<String> delete(@PathVariable Long id){
 		employeeImpl.delete(id);
 		return ResponseEntity.status(HttpStatus.OK).body("Deleted successfully");
