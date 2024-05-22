@@ -2,6 +2,7 @@ CREATE TYPE role AS ENUM ('CUSTOMER', 'EMPLOYEE');
 
 CREATE TABLE customer(
 	id BIGSERIAL PRIMARY KEY,
+	username VARCHAR(100),
 	name VARCHAR(100),
 	email VARCHAR(100),
 	cpf VARCHAR(11),
@@ -25,6 +26,7 @@ CREATE TABLE employee (
 	email VARCHAR(100),
 	cpf VARCHAR(11),
 	phone VARCHAR(13),
+	password VARCHAR(40),
 	role ROLE
 );
 
