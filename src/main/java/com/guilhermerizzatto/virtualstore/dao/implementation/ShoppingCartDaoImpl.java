@@ -1,14 +1,20 @@
 package com.guilhermerizzatto.virtualstore.dao.implementation;
 
-import com.guilhermerizzatto.virtualstore.APIs.GoogleDirectionsAPI;
-import com.guilhermerizzatto.virtualstore.DB.DBconnection;
-import com.guilhermerizzatto.virtualstore.dao.ShoppingCartDao;
-import com.guilhermerizzatto.virtualstore.entities.*;
-import com.guilhermerizzatto.virtualstore.utils.ShippingPriceCalculator;
-
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import com.guilhermerizzatto.virtualstore.DB.DBconnection;
+import com.guilhermerizzatto.virtualstore.dao.ShoppingCartDao;
+import com.guilhermerizzatto.virtualstore.entities.Address;
+import com.guilhermerizzatto.virtualstore.entities.Customer;
+import com.guilhermerizzatto.virtualstore.entities.Product;
+import com.guilhermerizzatto.virtualstore.entities.ProductItem;
+import com.guilhermerizzatto.virtualstore.entities.ShoppingCart;
 
 public class ShoppingCartDaoImpl implements ShoppingCartDao {
 
@@ -22,17 +28,23 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	public ShoppingCart findByCustomerId(Long id) {
 		PreparedStatement st = null;
 		ResultSet rs = null;
+		
 		ShoppingCart cart = new ShoppingCart();
+		
 		try {
-			st = conn.prepareStatement(
-					"SELECT Cart.id AS shoppingcart_id, Cart.shippingprice, Cart.customer_id, Address.id AS address_id, Address.street, Address.district, Address.city, "
-					+ "Address.state,Customer.name,Customer.email,Customer.cpf,Customer.phone,Pitem.product_id, Pitem.quantity, Pitem.price AS totalprice, "
-					+ "Product.name, Product.description, Product.price,Product.imageurl FROM shoppingcart Cart "
-					+ "INNER JOIN address Address ON Address.id = Cart.address_id "
-					+ "INNER JOIN customer Customer ON Customer.id = Cart.customer_id "
-					+ "INNER JOIN productitem Pitem ON Pitem.shoppingcart_id = Cart.id "
-					+ "INNER JOIN product Product ON Product.id = Pitem.product_id "
-					+ "WHERE shoppingcart_id = ?");
+			st = conn.prepareStatement("""
+					SELECT address.id AS address_id, address.street, address.district, address.city, address.state
+					,customer.id AS customer_id, customer."name", customer.email, customer.cpf, customer.phone
+					,product.id AS product_id, product."name", product.description, product.price, product.imageurl
+					,productitem.quantity, productitem.price
+					,shoppingcart.id AS shoppingcart_id, shoppingcart.shippingprice 
+					FROM address
+					INNER JOIN shoppingcart ON shoppingcart.address_id = address.id
+					INNER JOIN customer ON customer.id = shoppingcart.customer_id 
+					INNER JOIN productitem ON productitem.shoppingcart_id  = shoppingcart.id
+					INNER JOIN product ON product.id = productitem.product_id
+					WHERE shoppingcart.id = ?;
+					""");
 
 			st.setLong(1, id);
 
@@ -42,43 +54,43 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 			Customer customer = new Customer();
 			
 			while (rs.next()) {
-				cart.setId(rs.getLong(1));
 				
-				address.setId(rs.getLong(4));
-				address.setStreet(rs.getString(5));
-				address.setDistrict(rs.getString(6));
-				address.setCity(rs.getString(7));
-				address.setState(rs.getString(8));
+				address.setId(rs.getLong(1));
+				address.setStreet(rs.getString(2));
+				address.setDistrict(rs.getString(3));
+				address.setCity(rs.getString(4));
+				address.setState(rs.getString(5));
 				
-				cart.setAddress(address);
-							
-				customer.setId(rs.getLong(3));
-				customer.setName(rs.getString(9));
-				customer.setEmail(rs.getString(10));
-				customer.setCpf(rs.getString(11));
-				customer.setPhone(rs.getString(12));
 				
-				cart.setCustomer(customer);
+				customer.setId(rs.getLong(6));
+				customer.setName(rs.getString(7));
+				customer.setEmail(rs.getString(8));
+				customer.setCpf(rs.getString(9));
+				customer.setPhone(rs.getString(10));
 				
 				Product product = new Product();
 				
-				product.setId(rs.getLong(13));
-				product.setName(rs.getString(16));
-				product.setDescription(rs.getString(17));
-				product.setPrice(rs.getBigDecimal(18));
-				product.setImageURL(rs.getString(19));
+				product.setId(rs.getLong(11));
+				product.setName(rs.getString(12));
+				product.setDescription(rs.getString(13));
+				product.setPrice(rs.getBigDecimal(14));
+				product.setImageURL(rs.getString(15));
 				
 				ProductItem item = new ProductItem();
-				item.setQuantity(rs.getInt(14));
-				item.setPrice(rs.getBigDecimal(15));
+				item.setQuantity(rs.getInt(16));
+				item.setPrice(rs.getBigDecimal(17));
+				
+				cart.setId(rs.getLong(18));
+				cart.setShippingPrice(rs.getBigDecimal(19));
+				cart.setAddress(address);
+				cart.setCustomer(customer);
+				
 				item.setProduct(product);
 				item.setShoppingCart(cart);
 				
 				cart.getProducts().add(item);
 			
 			}
-			
-			cart.shippingPriceCalculator();
 			
 			DBconnection.closeResultSet(rs);
 		} catch (SQLException e) {
