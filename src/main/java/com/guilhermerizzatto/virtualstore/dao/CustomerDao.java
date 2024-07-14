@@ -7,6 +7,7 @@ import java.util.List;
 public interface CustomerDao {
 
     public Customer findById(Long id);
+    public Customer findByUsername(String username);
     public List<Customer> findAll();
     public Customer insert(Customer obj);
     public void update(Customer customer);

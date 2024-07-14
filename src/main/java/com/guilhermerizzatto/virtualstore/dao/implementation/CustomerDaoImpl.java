@@ -1,14 +1,21 @@
 package com.guilhermerizzatto.virtualstore.dao.implementation;
 
-import com.guilhermerizzatto.virtualstore.DB.DBconnection;
-import com.guilhermerizzatto.virtualstore.dao.CustomerDao;
-import com.guilhermerizzatto.virtualstore.entities.Address;
-import com.guilhermerizzatto.virtualstore.entities.Customer;
-
 import java.io.IOException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import com.guilhermerizzatto.virtualstore.DB.DBconnection;
+import com.guilhermerizzatto.virtualstore.dao.CustomerDao;
+import com.guilhermerizzatto.virtualstore.dtos.login.LoginCustomerRequest;
+import com.guilhermerizzatto.virtualstore.entities.Address;
+import com.guilhermerizzatto.virtualstore.entities.Customer;
 
 public class CustomerDaoImpl implements CustomerDao {
 
@@ -34,11 +41,12 @@ public class CustomerDaoImpl implements CustomerDao {
             if (rs.next()) {
                 Customer obj = new Customer();
                 obj.setId(rs.getLong(1));
-                obj.setName(rs.getString(2));
-                obj.setEmail(rs.getString(3));
-                obj.setCpf(rs.getString(4));
-                obj.setPhone(rs.getString(5));
-                obj.setPassword(rs.getString(6));
+                obj.setUsername(rs.getString(2));
+                obj.setName(rs.getString(3));
+                obj.setEmail(rs.getString(4));
+                obj.setCpf(rs.getString(5));
+                obj.setPhone(rs.getString(6));
+                obj.setPassword(rs.getString(7));
 
                 for(Address x : addressImpl.findByCustomerId(id)){
                     obj.getAdresses().add(x);
@@ -68,11 +76,12 @@ public class CustomerDaoImpl implements CustomerDao {
             while (rs.next()) {
                 Customer obj = new Customer();
                 obj.setId(rs.getLong(1));
-                obj.setName(rs.getString(2));
-                obj.setEmail(rs.getString(3));
-                obj.setCpf(rs.getString(4));
-                obj.setPhone(rs.getString(5));
-                obj.setPassword(rs.getString(6));
+                obj.setUsername(rs.getString(2));
+                obj.setName(rs.getString(3));
+                obj.setEmail(rs.getString(4));
+                obj.setCpf(rs.getString(5));
+                obj.setPhone(rs.getString(6));
+                obj.setPassword(rs.getString(7));
 
                 list.add(obj);
             }
@@ -90,15 +99,16 @@ public class CustomerDaoImpl implements CustomerDao {
         Customer objToSave = new Customer(obj);
         PreparedStatement st = null;
         try {
-            st = conn.prepareStatement("INSERT INTO customer (name, email, cpf, phone, password,role) VALUES (?,?,?,?,?,?::role)",
+            st = conn.prepareStatement("INSERT INTO customer (username, name, email, cpf, phone, password, role) VALUES (?,?,?,?,?,?,?::role)",
                     Statement.RETURN_GENERATED_KEYS);
 
-            st.setString(1, objToSave.getName());
-            st.setString(2, objToSave.getEmail());
-            st.setString(3, objToSave.getCpf());
-            st.setString(4, objToSave.getPhone());
-            st.setString(5, objToSave.getPassword());
-            st.setString(6, objToSave.getRoleString());
+            st.setString(1, objToSave.getUsername());
+            st.setString(2, objToSave.getName());
+            st.setString(3, objToSave.getEmail());
+            st.setString(4, objToSave.getCpf());
+            st.setString(5, objToSave.getPhone());
+            st.setString(6, objToSave.getPassword());
+            st.setString(7, objToSave.getRoleString());
 
             int rowsAffected = st.executeUpdate();
 
@@ -160,4 +170,50 @@ public class CustomerDaoImpl implements CustomerDao {
             DBconnection.closeStatement(st);
         }
     }
+
+
+	@Override
+	public Customer findByUsername(String username) {
+		
+		PreparedStatement st = null;
+        ResultSet rs = null;
+        AddressDaoImpl addressImpl = new AddressDaoImpl();
+
+        try {
+            st = conn.prepareStatement("SELECT * FROM customer WHERE username = ?");
+
+            st.setString(1, username);
+
+            rs = st.executeQuery();
+
+            if (rs.next()) {
+                Customer obj = new Customer();
+                obj.setId(rs.getLong(1));
+                obj.setUsername(rs.getString(2));
+                obj.setName(rs.getString(3));
+                obj.setEmail(rs.getString(4));
+                obj.setCpf(rs.getString(5));
+                obj.setPhone(rs.getString(6));
+                obj.setPassword(rs.getString(7));
+
+                for(Address x : addressImpl.findByCustomerId(obj.getId())){
+                    obj.getAdresses().add(x);
+                }
+
+                return obj;
+            }
+            DBconnection.closeResultSet(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBconnection.closeStatement(st);
+        }
+        return null;
+    }
+	
+	//public boolean isPasswordCorrect(LoginCustomerRequest loginRequest, BCryptPasswordEncoder bCryptPasswordEncoder, String passwordCrypt) {
+	//	return bCryptPasswordEncoder.matches(loginRequest.getPassword(), passwordCrypt);
+		
+	//}
+	
 }

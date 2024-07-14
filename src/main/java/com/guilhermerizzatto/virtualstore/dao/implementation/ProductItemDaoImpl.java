@@ -26,10 +26,12 @@ public class ProductItemDaoImpl implements ProductItemDao{
     	PreparedStatement st = null;
         ResultSet rs = null;
         try {
-            st = conn.prepareStatement("SELECT item.product_id,product.name,product.description,product.price AS unityPrice,product.imageurl,item.quantity,item.price AS totalPrice "
-            		+ "FROM productitem item "
-            		+ "INNER JOIN product product ON item.product_id = product.id "
-            		+ "WHERE shoppingcart_id = ?");
+            st = conn.prepareStatement("""
+            		SELECT item.product_id,product.name,product.description,product.price AS unityPrice,product.imageurl,item.quantity,item.price AS totalPrice
+            		FROM productitem item
+            		INNER JOIN product product ON item.product_id = product.id
+            		WHERE shoppingcart_id = ?
+            		""");
 
             st.setLong(1, id);
 

@@ -17,7 +17,7 @@ import com.guilhermerizzatto.virtualstore.entities.Stock;
 public class GoogleDirectionsAPI {
 	
 	private static GeoApiContext context = new GeoApiContext.Builder()
-		    .apiKey("YOUR_GOOGLE_API_KEY")
+		    .apiKey("AIzaSyAT0jwhn4myIJ1vsjyNwLAz07852e2fGg8")
 		    .build();
 
 	 public static Long getDistance(Address address) throws ApiException, InterruptedException, IOException {
@@ -35,7 +35,7 @@ public class GoogleDirectionsAPI {
 				 distance = legs.distance;
 			}
 		}
-		return distance.inMeters;
+		return (Long) distance.inMeters;
 	 }
 
 	public static Long getDistanceWithCep(String cep) throws ApiException, InterruptedException, IOException {
@@ -53,7 +53,7 @@ public class GoogleDirectionsAPI {
 				distance = legs.distance;
 			}
 		}
-		return distance.inMeters;
+		return (Long) distance.inMeters;
 	}
 
 }

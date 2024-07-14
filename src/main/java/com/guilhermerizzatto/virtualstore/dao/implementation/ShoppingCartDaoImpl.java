@@ -34,7 +34,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 		try {
 			st = conn.prepareStatement("""
 					SELECT address.id AS address_id, address.street, address.district, address.city, address.state
-					,customer.id AS customer_id, customer."name", customer.email, customer.cpf, customer.phone
+					,customer.id AS customer_id, customer.username, customer."name", customer.email, customer.cpf, customer.phone
 					,product.id AS product_id, product."name", product.description, product.price, product.imageurl
 					,productitem.quantity, productitem.price
 					,shoppingcart.id AS shoppingcart_id, shoppingcart.shippingprice 
@@ -63,25 +63,26 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 				
 				
 				customer.setId(rs.getLong(6));
-				customer.setName(rs.getString(7));
-				customer.setEmail(rs.getString(8));
-				customer.setCpf(rs.getString(9));
-				customer.setPhone(rs.getString(10));
+				customer.setUsername(rs.getString(7));
+				customer.setName(rs.getString(8));
+				customer.setEmail(rs.getString(9));
+				customer.setCpf(rs.getString(10));
+				customer.setPhone(rs.getString(11));
 				
 				Product product = new Product();
 				
-				product.setId(rs.getLong(11));
-				product.setName(rs.getString(12));
-				product.setDescription(rs.getString(13));
-				product.setPrice(rs.getBigDecimal(14));
-				product.setImageURL(rs.getString(15));
+				product.setId(rs.getLong(12));
+				product.setName(rs.getString(13));
+				product.setDescription(rs.getString(14));
+				product.setPrice(rs.getBigDecimal(15));
+				product.setImageURL(rs.getString(16));
 				
 				ProductItem item = new ProductItem();
-				item.setQuantity(rs.getInt(16));
-				item.setPrice(rs.getBigDecimal(17));
+				item.setQuantity(rs.getInt(17));
+				item.setPrice(rs.getBigDecimal(18));
 				
-				cart.setId(rs.getLong(18));
-				cart.setShippingPrice(rs.getBigDecimal(19));
+				cart.setId(rs.getLong(19));
+				cart.setShippingPrice(rs.getBigDecimal(20));
 				cart.setAddress(address);
 				cart.setCustomer(customer);
 				

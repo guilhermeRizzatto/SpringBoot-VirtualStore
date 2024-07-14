@@ -2,17 +2,22 @@ package com.guilhermerizzatto.virtualstore.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.guilhermerizzatto.virtualstore.enums.Role;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-public class Customer implements Serializable{
+public class Customer implements Serializable, UserDetails {
 	
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
+	private String username;
 	private String name;
 	private String email;
 	private String cpf;
@@ -26,9 +31,21 @@ public class Customer implements Serializable{
 	public Customer() {
 	}
 
-	public Customer(Long id, String name, String email, String cpf, String phone, String password) {
+	public Customer(Long id, String username,String name, String email, String cpf, String phone, String password) {
 		super();
 		this.id = id;
+		this.username = username;
+		this.name = name;
+		this.email = email;
+		this.cpf = cpf;
+		this.phone = phone;
+		this.password = password;
+	}
+
+	public Customer(String username,String name, String email, String cpf, String phone, String password) {
+		super();
+		this.id = id;
+		this.username = username;
 		this.name = name;
 		this.email = email;
 		this.cpf = cpf;
@@ -39,12 +56,44 @@ public class Customer implements Serializable{
 	public Customer(Customer obj) {
 		super();
 		this.id = obj.getId();
+		this.username = obj.getUsername();
 		this.name = obj.getName();
 		this.email = obj.getEmail();
 		this.cpf = obj.getCpf();
 		this.phone = obj.getPhone();
 		this.password = obj.getPassword();
 	}
+
+	@Override
+	public String getUsername() {
+		return username;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return List.of(new SimpleGrantedAuthority("ROLE_CUSTOMER"));
+	}
+
 
 
 	public Long getId() {
@@ -53,6 +102,10 @@ public class Customer implements Serializable{
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getName() {
@@ -135,14 +188,10 @@ public class Customer implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Customer{" +
-				"id=" + id +
-				", name='" + name + '\'' +
-				", email='" + email + '\'' +
-				", cpf='" + cpf + '\'' +
-				", phone='" + phone + '\'' +
-				", password='" + password + '\'' +
-				", role=" + role +
-				'}';
+		return "Customer [id=" + id + ", username=" + username + ", name=" + name + ", email=" + email + ", cpf=" + cpf
+				+ ", phone=" + phone + ", password=" + password + ", role=" + role + ", adresses=" + adresses
+				+ ", shoppingCart=" + shoppingCart + "]";
 	}
+
+	
 }

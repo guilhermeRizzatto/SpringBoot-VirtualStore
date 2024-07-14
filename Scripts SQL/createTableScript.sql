@@ -2,12 +2,12 @@ CREATE TYPE role AS ENUM ('CUSTOMER', 'EMPLOYEE');
 
 CREATE TABLE customer(
 	id BIGSERIAL PRIMARY KEY,
-	username VARCHAR(100),
+	username VARCHAR(100) UNIQUE,
 	name VARCHAR(100),
 	email VARCHAR(100),
-	cpf VARCHAR(11),
+	cpf VARCHAR(11) UNIQUE,
 	phone VARCHAR(13),
-	password VARCHAR(40),
+	password VARCHAR,
 	role ROLE
 );
 
@@ -23,10 +23,10 @@ CREATE TABLE address (
 CREATE TABLE employee (
 	id BIGSERIAL PRIMARY KEY,
 	name VARCHAR(100),
-	email VARCHAR(100),
-	cpf VARCHAR(11),
+	email VARCHAR(100) UNIQUE,
+	cpf VARCHAR(11) UNIQUE,
 	phone VARCHAR(13),
-	password VARCHAR(40),
+	password VARCHAR,
 	role ROLE
 );
 

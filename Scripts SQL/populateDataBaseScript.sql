@@ -1,16 +1,16 @@
 INSERT INTO employee(name,email,cpf,phone,password,role) VALUES 
-('Lucas Heitor Souza','lucas_souza@gmail.com','89604973207','(27)998021893','LucasSouza','EMPLOYEE'),
-('Bruna Francisca Stella da Paz','bruna-dapaz96@gmail.com','29568957022','(47)987893507','BrunaPaz','EMPLOYEE'),
-('Clarice Jennifer Amanda','clarice@gmail.com','29956779237','(69)994713312','ClariceAmanda','EMPLOYEE'),
-('Joaquim Eduardo Bento Farias','joaquim-farias70@gmail.com','86696834079','(51)996397452','JoaquimFarias','EMPLOYEE'),
-('Isadora Clara da Cruz','isadora.clara.dacruz@gmail.com','91191875210','(27)989842913','IsaCruz','EMPLOYEE')
+('Lucas Heitor Souza','lucas_souza@gmail.com','89604973207','(27)998021893','$2a$12$HIjzO1a11HE8jkBh.9fuIeruy.G4pBHAfNKKaW27rmu.qRWejZkbG','EMPLOYEE'),
+('Bruna Francisca Stella da Paz','bruna-dapaz96@gmail.com','29568957022','(47)987893507','$2a$12$toi0qqM1EkTb2ZypZ.Pd3uHBYdGSCQ6IycXxUstnaLEa6Qyj8zN6S','EMPLOYEE'),
+('Clarice Jennifer Amanda','clarice@gmail.com','29956779237','(69)994713312','$2a$12$KeoizH4LTf.HT5T0r3pbVO1JfaTq/L49H4tRDSdfGGc3gy4Yhty8C','EMPLOYEE'),
+('Joaquim Eduardo Bento Farias','joaquim-farias70@gmail.com','86696834079','(51)996397452','$2a$12$fFRK9AWCi6Wvn8qeum7MZuUyltRrVgYEJZA0UfLqn7i/MEScuqTum','EMPLOYEE'),
+('Isadora Clara da Cruz','isadora.clara.dacruz@gmail.com','91191875210','(27)989842913','$2a$12$G9bRDrBCoWj4kb81RMHfT.f7aOunwWUceO34LoPU4OZR0BKZS.U4m','EMPLOYEE')
 
 INSERT INTO customer(username,name,email,cpf,phone,password,role) VALUES
-('Augusto199','Augusto Gabriel Lima','augustogabriellima@gmail.com','70540783498','(63)992194070','CW0ttDw8CX','CUSTOMER'),
-('Benedito','Benedito Renato Ferreira','benedito-ferreira77@gmail.com','791122408','(67)992323330','I7WTqL1Z7b','CUSTOMER'),
-('Danilo_123','Danilo Gael Nunes','danilo_gael_nunes@gmail.com','28963715914','(92)993690618','xhfwUKw8qO','CUSTOMER'),
-('JosefaNair_132','Josefa Luzia Nair Almeida','josefaluziaalmeida@gmail.com','86093483266','(16)997870434','PLnP3r1kX6','CUSTOMER'),
-('LuanFR','Luan Filipe Araújo','luanfilipearaujo@gmail.com','37591592653','(66)986671424','d2NmoKaMjc','CUSTOMER')
+('Augusto199','Augusto Gabriel Lima','augustogabriellima@gmail.com','70540783498','(63)992194070','$2a$12$8qjCrrPq1HH7rpVhaYp/q.MiVeB2KD.2p3Qq4SzHbAzL/uHcTv5kG','CUSTOMER'),
+('Benedito','Benedito Renato Ferreira','benedito-ferreira77@gmail.com','791122408','(67)992323330','$2a$12$JhoaGbX4Hzu0WCaxUr1/uuRC87DISuLMflo9tdzST.fFupjczIvQS','CUSTOMER'),
+('Danilo_123','Danilo Gael Nunes','danilo_gael_nunes@gmail.com','28963715914','(92)993690618','$2a$12$oPf3TalxbtytmFZI5eai7.PsW3ZK.n7ZgsZKWbiHCEM1GY3trWOIW','CUSTOMER'),
+('JosefaNair_132','Josefa Luzia Nair Almeida','josefaluziaalmeida@gmail.com','86093483266','(16)997870434','$2a$12$sUdLr4TGkWIW4MzGKOm6VuVrKX5xvlxzeKnbikSU3IszBuQxhf8O2','CUSTOMER'),
+('LuanFR','Luan Filipe Araújo','luanfilipearaujo@gmail.com','37591592653','(66)986671424','$2a$12$QGROkaptYJxhmB4lpAEUO.sA81RTSCLq0z2.7Yu9fOa9muj8.jRpm','CUSTOMER')
 
 INSERT INTO address(street,district,city,state,customer_id) VALUES
 ('R. das Orquideas, 588','Parque das Araras','Sinop','MT','5'),

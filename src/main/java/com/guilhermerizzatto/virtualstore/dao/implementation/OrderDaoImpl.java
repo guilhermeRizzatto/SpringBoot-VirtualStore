@@ -33,15 +33,17 @@ public class OrderDaoImpl implements OrderDao {
         ResultSet rs = null;
         Order order = new Order();
         try {
-            st = conn.prepareStatement("SELECT customer.id AS customer_id, customer.name,customer.email,customer.cpf,customer.phone,cOrder.id AS order_id " +
-                    ",cOrder.total,cOrder.moment,cart.id AS cart_id,cart.shippingprice,address.id as address_id,address.street,address.district " +
-                    ",address.city,address.state,product.id AS product_id,product.name,product.description,product.price,product.imageurl " +
-                    ",item.quantity,item.price AS subtotal FROM customer customer " +
-                    "INNER JOIN customerorder cOrder ON cOrder.customer_id = customer.id " +
-                    "INNER JOIN shoppingcart cart ON cart.id = cOrder.shoppingcart_id " +
-                    "INNER JOIN address ON cart.address_id = address.id " +
-                    "INNER JOIN productitem item ON item.shoppingcart_id = cart.id " +
-                    "INNER JOIN product ON item.product_id = product.id WHERE cOrder.customer_id = ?");
+            st = conn.prepareStatement("""
+                    SELECT customer.id AS customer_id, customer.username, customer.name,customer.email,customer.cpf,customer.phone,cOrder.id AS order_id 
+                    ,cOrder.total,cOrder.moment,cart.id AS cart_id,cart.shippingprice,address.id as address_id,address.street,address.district
+                    ,address.city,address.state,product.id AS product_id,product.name,product.description,product.price,product.imageurl
+                    ,item.quantity,item.price AS subtotal FROM customer customer
+                    INNER JOIN customerorder cOrder ON cOrder.customer_id = customer.id
+                    INNER JOIN shoppingcart cart ON cart.id = cOrder.shoppingcart_id
+                    INNER JOIN address ON cart.address_id = address.id
+                    INNER JOIN productitem item ON item.shoppingcart_id = cart.id
+                    INNER JOIN product ON item.product_id = product.id WHERE cOrder.customer_id = ?
+                    """);
 
             st.setLong(1, id);
 
@@ -52,35 +54,36 @@ public class OrderDaoImpl implements OrderDao {
 
             while (rs.next()) {
                 customer.setId(rs.getLong(1));
-                customer.setName(rs.getString(2));
-                customer.setEmail(rs.getString(3));
-                customer.setCpf(rs.getString(4));
-                customer.setPhone(rs.getString(5));
+                customer.setUsername(rs.getString(2));
+                customer.setName(rs.getString(3));
+                customer.setEmail(rs.getString(4));
+                customer.setCpf(rs.getString(5));
+                customer.setPhone(rs.getString(6));
 
-                order.setId(rs.getLong(6));
-                order.setTotal(rs.getBigDecimal(7));
-                order.setMoment(rs.getTimestamp(8).toInstant());
+                order.setId(rs.getLong(7));
+                order.setTotal(rs.getBigDecimal(8));
+                order.setMoment(rs.getTimestamp(9).toInstant());
 
-                cart.setId(rs.getLong(9));
-                cart.setShippingPrice(rs.getBigDecimal(10));
+                cart.setId(rs.getLong(10));
+                cart.setShippingPrice(rs.getBigDecimal(11));
 
                 Address address = new Address();
-                address.setId(rs.getLong(11));
-                address.setStreet(rs.getString(12));
-                address.setDistrict(rs.getString(13));
-                address.setCity(rs.getString(14));
-                address.setState(rs.getString(15));
+                address.setId(rs.getLong(12));
+                address.setStreet(rs.getString(13));
+                address.setDistrict(rs.getString(14));
+                address.setCity(rs.getString(15));
+                address.setState(rs.getString(16));
 
                 Product product = new Product();
-                product.setId(rs.getLong(16));
-                product.setName(rs.getString(17));
-                product.setDescription(rs.getString(18));
-                product.setPrice(rs.getBigDecimal(19));
-                product.setImageURL(rs.getString(20));
+                product.setId(rs.getLong(17));
+                product.setName(rs.getString(18));
+                product.setDescription(rs.getString(19));
+                product.setPrice(rs.getBigDecimal(20));
+                product.setImageURL(rs.getString(21));
 
                 ProductItem item = new ProductItem();
-                item.setQuantity(rs.getInt(21));
-                item.setPrice(rs.getBigDecimal(22));
+                item.setQuantity(rs.getInt(22));
+                item.setPrice(rs.getBigDecimal(23));
 
                 cart.setCustomer(customer);
                 cart.setAddress(address);
